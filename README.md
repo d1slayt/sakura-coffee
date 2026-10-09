@@ -118,6 +118,12 @@ npx prisma dev
 | `npm run test` | Vitest: юнит-тесты, а при наличии `DATABASE_URL` интеграционные тесты с реальной БД |
 | `npm run test:e2e` | Playwright (сначала `npm run build`; один раз `npx playwright install chromium`) |
 | `npm run check` | lint, typecheck и тесты |
+| `npm run audit:responsive -- <url>` | Аудит вёрстки: 12 устройств (280–2560 px, Chromium + WebKit/Safari) × 5 страниц — горизонтальный скролл, вылезающие элементы, незагруженные фото |
+| `npm run photos` | Скачать фото с Unsplash один раз и нарезать WebP 320/640/960/1600 в `public/photos` |
+
+Фотографии хранятся в самом проекте (`public/photos`), а не подгружаются с CDN Unsplash:
+сайт не зависит от доступности стороннего сервиса из сети посетителя, а на телефонах
+загружается подходящий по ширине файл.
 
 ## Что проверено
 

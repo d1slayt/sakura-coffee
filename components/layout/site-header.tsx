@@ -13,7 +13,7 @@ import { OpenStatus } from "./open-status";
 function MobileNavFallback({ label }: { label: string }) {
   return (
     <div className="md:hidden">
-      <button type="button" aria-expanded={false} disabled className="-mr-2 inline-flex size-11 items-center justify-center">
+      <button type="button" aria-expanded={false} disabled className="inline-flex size-11 items-center justify-center">
         <span className="sr-only">{label}</span>
         <Menu aria-hidden strokeWidth={1.5} className="size-6" />
       </button>
@@ -25,9 +25,9 @@ export function SiteHeader() {
   const t = getDictionary();
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-ivory">
-      <div className="container-page flex h-(--spacing-header) items-center justify-between gap-6">
-        <div className="flex items-center gap-10 lg:gap-14">
-          <Link href="/" aria-label={t.nav.home} className="py-2">
+      <div className="container-page flex h-(--spacing-header) items-center justify-between gap-3 sm:gap-6">
+        <div className="flex min-w-0 items-center gap-10 lg:gap-14">
+          <Link href="/" aria-label={t.nav.home} className="shrink-0 py-2">
             <Logo />
           </Link>
           <Suspense fallback={<NavLinksView label={t.a11y.mainNavigation} itemLabels={t.nav.items} pathname={null} />}>
@@ -35,12 +35,13 @@ export function SiteHeader() {
           </Suspense>
         </div>
 
-        <div className="flex items-center gap-6">
+        <div className="flex shrink-0 items-center gap-3 sm:gap-6">
           <OpenStatus labels={t.status} className="hidden lg:flex" />
           <Link href="/visit#book" className={actionClass("outline", "default", "hidden min-h-10 px-5 text-sm md:inline-flex")}>
             {t.nav.cta}
           </Link>
-          <Link href="/visit#book" className="meta inline-flex min-h-11 items-center px-1 md:hidden">
+          {/* Hidden on the narrowest phones (Galaxy Fold): the same link is inside the menu sheet. */}
+          <Link href="/visit#book" className="meta inline-flex min-h-11 items-center px-1 max-[359px]:hidden md:hidden">
             {t.nav.ctaShort}
           </Link>
           <Suspense fallback={<MobileNavFallback label={t.a11y.openMenu} />}>

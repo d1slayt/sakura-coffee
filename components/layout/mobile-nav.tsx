@@ -78,7 +78,7 @@ export function MobileNav({ labels }: { labels: Labels }) {
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => (open ? close() : setOpen(true))}
-        className="-mr-2 inline-flex size-11 items-center justify-center"
+        className="inline-flex size-11 items-center justify-center"
       >
         <span className="sr-only">{open ? labels.close : labels.open}</span>
         {open ? <X aria-hidden strokeWidth={1.5} className="size-6" /> : <Menu aria-hidden strokeWidth={1.5} className="size-6" />}

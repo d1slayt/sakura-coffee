@@ -50,8 +50,8 @@ const staticDemo: NextConfig = {
   output: "export",
   basePath,
   trailingSlash: true,
-  // No image optimizer on a static host: Unsplash's CDN resizes via a custom loader.
-  images: { loader: "custom", loaderFile: "./lib/unsplash-loader.ts", qualities: [70, 80] },
+  // No image optimizer on a static host: pick a pre-generated width instead.
+  images: { loader: "custom", loaderFile: "./lib/static-photo-loader.ts", qualities: [70, 80] },
   typescript: { tsconfigPath: "tsconfig.pages.json" },
 };
 

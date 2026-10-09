@@ -37,40 +37,47 @@ export function FeaturedList({ items, labels }: { items: FeaturedItem[]; labels:
               href={`/menu/${item.slug}`}
               onMouseEnter={() => setActiveSlug(item.slug)}
               onFocus={() => setActiveSlug(item.slug)}
-              className="group grid grid-cols-[2.25rem_minmax(0,1fr)_auto] items-start gap-x-3 py-6 sm:grid-cols-[3rem_minmax(0,1fr)_auto] sm:gap-x-4"
+              // Phones: [thumbnail | text], price sits under the text so the name gets the full width.
+              // Tablets: [thumbnail | text | price]. Desktop: [number | text | price] beside the photo plate.
+              className="group grid grid-cols-[3.5rem_minmax(0,1fr)] items-start gap-x-4 py-6 sm:grid-cols-[4.5rem_minmax(0,1fr)_auto] sm:gap-x-5 lg:grid-cols-[3rem_minmax(0,1fr)_auto] lg:gap-x-4"
             >
-              <span className="meta pt-2 text-muted tabular" aria-hidden>
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span className="flex gap-4">
-                <span className="min-w-0 flex-1">
-                  <span
-                    className={cn(
-                      "block font-display text-[1.75rem] leading-tight transition-colors duration-(--duration-quick) group-hover:text-rose-ink sm:text-[2rem]",
-                      !item.isAvailable && "text-muted",
-                    )}
-                  >
-                    {item.name}
-                  </span>
-                  <span className="mt-2 block max-w-[46ch] text-[0.9375rem] text-muted">{item.description}</span>
-                  {item.isAvailable ? (
-                    item.brewNote ? (
-                      <span className="meta mt-3 block text-muted">{item.brewNote}</span>
-                    ) : null
-                  ) : (
-                    <span className="meta mt-3 inline-flex items-center gap-2 text-rose-ink">
-                      <BlossomMark className="size-3.5" />
-                      {item.availabilityNote ?? labels.unavailable}
-                    </span>
-                  )}
-                </span>
+              <span aria-hidden className="lg:pt-2">
+                <span className="meta hidden text-muted tabular lg:inline">{String(index + 1).padStart(2, "0")}</span>
                 {item.imageUrl ? (
-                  <span className="relative size-18 shrink-0 overflow-hidden bg-paper lg:hidden">
-                    <Image src={item.imageUrl} alt="" fill sizes="72px" quality={70} className="object-cover" />
+                  <span className="relative block aspect-square w-full overflow-hidden bg-paper lg:hidden">
+                    <Image src={item.imageUrl} alt="" fill sizes="(min-width: 640px) 72px, 56px" quality={70} className="object-cover" />
                   </span>
+                ) : (
+                  <span className="flex aspect-square w-full items-center justify-center bg-sakura lg:hidden">
+                    <BlossomMark className="size-6 text-rose-ink" />
+                  </span>
+                )}
+              </span>
+              <span className="min-w-0">
+                <span
+                  className={cn(
+                    "block font-display text-[1.25rem] leading-tight hyphens-auto [overflow-wrap:anywhere] transition-colors duration-(--duration-quick) group-hover:text-rose-ink min-[360px]:text-[1.75rem] sm:text-[2rem]",
+                    !item.isAvailable && "text-muted",
+                  )}
+                >
+                  {item.name}
+                </span>
+                <span className="mt-2 block max-w-[46ch] text-[0.9375rem] text-muted">{item.description}</span>
+                {item.isAvailable ? (
+                  item.brewNote ? (
+                    <span className="meta mt-3 block text-muted">{item.brewNote}</span>
+                  ) : null
+                ) : (
+                  <span className="meta mt-3 inline-flex items-center gap-2 text-rose-ink">
+                    <BlossomMark className="size-3.5" />
+                    {item.availabilityNote ?? labels.unavailable}
+                  </span>
+                )}
+                {item.isAvailable ? (
+                  <span className="mt-3 block font-semibold tabular sm:hidden">{formatPrice(item.priceCents)}</span>
                 ) : null}
               </span>
-              <span className="pt-2 text-right font-semibold tabular">
+              <span className="hidden pt-2 text-right font-semibold tabular sm:block">
                 {item.isAvailable ? formatPrice(item.priceCents) : <span className="sr-only">{labels.unavailable}</span>}
                 {!item.isAvailable ? <span aria-hidden className="text-muted">—</span> : null}
               </span>

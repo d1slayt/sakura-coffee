@@ -94,6 +94,9 @@
     font-weight: 400;
     text-wrap: balance;
     font-optical-sizing: auto;
+    /* Long Russian words at display sizes must never push the layout sideways on narrow phones. */
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   p {

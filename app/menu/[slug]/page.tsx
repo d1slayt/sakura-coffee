@@ -32,7 +32,7 @@ export async function generateMetadata(props: PageProps<"/menu/[slug]">): Promis
         title: `${item.name} — SakuraCoffee`,
         description: item.description,
         url: `/menu/${item.slug}`,
-        images: item.imageUrl ? [{ url: `${item.imageUrl}?auto=format&fit=crop&w=1200&h=630&q=75`, width: 1200, height: 630, alt: item.imageAlt ?? item.name }] : undefined,
+        images: item.imageUrl ? [{ url: absoluteUrl(item.imageUrl), alt: item.imageAlt ?? item.name }] : undefined,
       },
     };
   } catch (error) {

@@ -53,20 +53,21 @@ export function FeaturedMenu() {
   const t = dict.home.featured;
   return (
     <section aria-labelledby="featured-title" className="container-page py-(--spacing-section)">
-      <div className="grid grid-cols-1 gap-y-12 md:grid-cols-12 md:gap-x-6">
-        <div className="md:col-span-4">
-          <div className="md:sticky md:top-[calc(var(--spacing-header)+2rem)]">
+      {/* Two columns only from 1024px: on tablets the heading column was too narrow for the display type. */}
+      <div className="grid grid-cols-1 gap-y-12 lg:grid-cols-12 lg:gap-x-6">
+        <div className="lg:col-span-4">
+          <div className="lg:sticky lg:top-[calc(var(--spacing-header)+2rem)]">
             <SectionLabel>{t.label}</SectionLabel>
             <h2 id="featured-title" className="mt-6 font-display text-display-m">
               <EmphasisText value={t.title} />
             </h2>
-            <p className="mt-5 max-w-[30ch] text-muted">{t.intro}</p>
+            <p className="mt-5 max-w-[34ch] text-muted">{t.intro}</p>
             <ActionLink href="/menu" variant="text" className="mt-6">
               {t.cta}
             </ActionLink>
           </div>
         </div>
-        <div className="md:col-span-8">
+        <div className="lg:col-span-8">
           <DataBoundary title={dict.error.dataTitle} body={dict.error.dataBody} retryLabel={dict.error.retry}>
             <Suspense fallback={<FeaturedSkeleton />}>
               <FeaturedItems />
