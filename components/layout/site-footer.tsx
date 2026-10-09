@@ -69,9 +69,12 @@ export function SiteFooter() {
 
       <div className="container-page">
         <div className="flex flex-col gap-3 border-t border-line-inverse py-6 text-[0.8125rem] text-ivory-dim md:flex-row md:justify-between">
-          <p>
-            © {siteConfig.name} — {t.footer.rights}
-          </p>
+          <div>
+            <p>
+              {siteConfig.name} — {t.footer.rights}
+            </p>
+            <p className="mt-1">{t.footer.copyright}</p>
+          </div>
           <p>
             <span lang="ja">桜</span> — {t.footer.sakura}
           </p>

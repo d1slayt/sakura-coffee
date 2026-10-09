@@ -309,6 +309,7 @@ const en = {
     colophon: "Colophon",
     colophonBody: "Set in Literata and Manrope. Photography from Unsplash.",
     rights: "A concept brand built as a portfolio project.",
+    copyright: "© 2026 d1slayt. All rights reserved. Design and code may not be reused without permission.",
     sakura: "sakura, the cherry blossom.",
     home: "Home",
   },
