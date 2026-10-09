@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SakuraCoffee design tokens
+   Colour roles are documented in docs/design-direction.md. Components use
+   these tokens through Tailwind utilities (bg-ivory, text-muted, …); no
+   component defines its own colours, radii or easing.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  /* Colour */
+  --color-ivory: #f7f4ed;
+  --color-paper: #efeae0;
+  --color-ink: #241c19;
+  --color-coffee: #49352d;
+  --color-muted: #6e5b52;
+  --color-sakura: #e8b8bd;
+  --color-rose: #c9858d;
+  --color-rose-ink: #8e4a55;
+  --color-sage: #5e6450;
+  --color-line: rgb(36 28 25 / 0.16);
+  --color-line-strong: rgb(36 28 25 / 0.32);
+  --color-line-inverse: rgb(247 244 237 / 0.2);
+  --color-ivory-dim: #c9bfb8; /* secondary text on ink, 9.6:1 */
+
+  /* Type */
+  --font-display: var(--font-literata), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  --text-meta: 0.75rem;
+  --text-meta--line-height: 1.4;
+  --text-meta--letter-spacing: 0.14em;
+
+  --text-display-xl: clamp(2.6rem, 1.2rem + 5.2vw, 7rem);
+  --text-display-xl--line-height: 0.94;
+  --text-display-xl--letter-spacing: -0.025em;
+  --text-display-l: clamp(2.5rem, 1.6rem + 3.8vw, 5.25rem);
+  --text-display-l--line-height: 1;
+  --text-display-l--letter-spacing: -0.02em;
+  --text-display-m: clamp(2rem, 1.5rem + 2.1vw, 3.5rem);
+  --text-display-m--line-height: 1.05;
+  --text-display-m--letter-spacing: -0.015em;
+  --text-display-s: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
+  --text-display-s--line-height: 1.15;
+  --text-lede: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --text-lede--line-height: 1.55;
+
+  /* Layout */
+  --container-page: 90rem;
+  --container-prose: 38rem;
+  --spacing-gutter: clamp(1rem, 0.4rem + 2.6vw, 3rem);
+  --spacing-section: clamp(5rem, 3rem + 8vw, 11rem);
+  --spacing-header: 4.5rem;
+
+  /* Shape: square by default; inputs get a hairline-soft corner. */
+  --radius-input: 2px;
+
+  /* Motion */
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-quick: 180ms;
+  --duration-base: 360ms;
+  --duration-slow: 700ms;
+}
+
+/* ─── Base ──────────────────────────────────────────────────────────────── */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--spacing-header) + 1rem);
+  }
+
+  body {
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-sakura);
+    color: var(--color-ink);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-wrap: balance;
+    font-optical-sizing: auto;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-rose-ink);
+    outline-offset: 3px;
+  }
+
+  .surface-dark :focus-visible {
+    outline-color: var(--color-sakura);
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  /* Numbers that should line up (prices, times). */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ─── Utilities ─────────────────────────────────────────────────────────── */
+
+@utility container-page {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+
+/* Small uppercase metadata — the "chalkboard" voice. */
+@utility meta {
+  font-family: var(--font-sans);
+  font-size: var(--text-meta);
+  line-height: var(--text-meta--line-height);
+  letter-spacing: var(--text-meta--letter-spacing);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Vertical caption beside photographs; reads bottom-to-top. */
+@utility vertical-caption {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+/* Underline that draws in from the left on hover/focus. */
+@utility link-draw {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--duration-base) var(--ease-soft);
+  padding-bottom: 2px;
+
+  &:hover,
+  &:focus-visible,
+  &[aria-current="page"] {
+    background-size: 100% 1px;
+  }
+}
+
+/* Permanent underline that thickens on hover (inline text links). */
+@utility link-text {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  transition: text-decoration-color var(--duration-quick) ease;
+
+  &:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+@utility hairline {
+  border-color: var(--color-line);
+}
+
+/* Hide scrollbars on intentionally scrollable rows (filters) while keeping them usable. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ─── Reduced motion ────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

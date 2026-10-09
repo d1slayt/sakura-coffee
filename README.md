@@ -1,0 +1,113 @@
+# SakuraCoffee
+
+Сайт небольшого эспрессо-бара с японским влиянием: редакционный дизайн, меню из
+PostgreSQL с поиском и фильтрами по аллергенам, бронирование стойки альтернативы с
+защитой от овербукинга, форма обратной связи.
+
+> **Концептуальный бренд для портфолио.** Адрес, часы работы и лоты кофе — демо-данные
+> (на сайте помечены как «Демо-данные»). Фотографии с Unsplash, иллюстративные.
+
+- Дизайн-направление: [docs/design-direction.md](docs/design-direction.md)
+- Архитектура, схема БД, API: [docs/architecture.md](docs/architecture.md)
+
+## Стек
+
+Next.js 16.4 (App Router, Cache Components) · React 19 · TypeScript (strict) ·
+Tailwind CSS 4 · PostgreSQL · Prisma 7 · Zod 4 · Motion · Lucide · Vitest · Playwright.
+
+## Быстрый старт
+
+Нужен Node.js 20.9+ (проверено на 24) и PostgreSQL 14+.
+
+```bash
+npm install
+```
+
+```bash
+cp .env.example .env
+```
+
+Отредактируйте `.env` (см. ниже), затем:
+
+```bash
+npm run db:deploy
+```
+
+```bash
+npm run db:seed
+```
+
+```bash
+npm run dev
+```
+
+Сайт откроется на http://localhost:3000.
+
+## PostgreSQL и `.env`
+
+### Вариант А — свой PostgreSQL (Docker)
+
+```bash
+docker run -d --name sakura-db -e POSTGRES_USER=sakura -e POSTGRES_PASSWORD=sakura -e POSTGRES_DB=sakura_coffee -p 5432:5432 postgres:17
+```
+
+```dotenv
+DATABASE_URL="postgresql://sakura:sakura@localhost:5432/sakura_coffee?schema=public"
+RATE_LIMIT_SALT="<длинная случайная строка>"
+NEXT_PUBLIC_SITE_URL="http://localhost:3000"
+```
+
+Соль можно сгенерировать так:
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+### Вариант Б — без установки (Prisma Dev, PGlite)
+
+```bash
+npx prisma dev
+```
+
+Команда печатает строку `postgres://…`. Скопируйте её в `DATABASE_URL` и добавьте
+`DATABASE_POOL_MAX=1`: PGlite выполняет все подключения в одной сессии Postgres. Этот
+вариант подходит для разработки и тестов. Настоящую параллельность транзакций
+проверяйте на варианте А.
+
+## Команды
+
+| Команда | Что делает |
+| --- | --- |
+| `npm run dev` | Dev-сервер |
+| `npm run build` / `npm run start` | Production-сборка и запуск. **Сборке база не нужна.** |
+| `npm run db:migrate` | Создать или применить миграции в разработке (`prisma migrate dev`) |
+| `npm run db:deploy` | Применить миграции в production (`prisma migrate deploy`) |
+| `npm run db:seed` | Заполнить меню. Идемпотентно, брони не трогает. |
+| `npm run db:studio` | Prisma Studio |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | `next typegen` и `tsc --noEmit` |
+| `npm run test` | Vitest: юнит-тесты, а при наличии `DATABASE_URL` интеграционные тесты с реальной БД |
+| `npm run test:e2e` | Playwright (сначала `npm run build`; один раз `npx playwright install chromium`) |
+| `npm run check` | lint, typecheck и тесты |
+
+## Что проверено
+
+На момент сдачи:
+- `npm run lint` — без ошибок;
+- `npm run typecheck` — без ошибок;
+- `npm run build` — успешно, в том числе с недоступной базой;
+- `npm run test` — 67/67, база через `prisma dev`;
+- `npm run test:e2e` — 18 passed, 2 skipped (сценарии только для одного вьюпорта);
+- миграции применены, seed выполнен и повторён (идемпотентность).
+
+Подробности — в итоговом отчёте разработки.
+
+## Ограничения
+
+- Демо-бренд: писем не отправляется, админки нет. Брони сохраняются со статусом
+  `PENDING`, сообщения — со статусом `NEW`.
+- Rate limit определяет клиента по `X-Forwarded-For`. Без обратного прокси все клиенты
+  попадают в один «unknown»-счётчик.
+- Контент меню в БД на одном языке (русском). Словари интерфейса есть для `ru` и `en`.
+- OG-картинка без текста: встроенный шрифт генератора не поддерживает кириллицу, а
+  загрузка шрифта при сборке сделала бы её зависимой от сети.

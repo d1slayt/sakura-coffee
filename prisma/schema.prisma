@@ -1,0 +1,165 @@
+// SakuraCoffee database schema.
+// Connection settings live in prisma.config.ts (Prisma 7); the app connects
+// through the `pg` driver adapter (see lib/db/client.ts).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Menu ────────────────────────────────────────────────────────────────────
+
+enum MenuSection {
+  DRINK
+  FOOD
+}
+
+/// EU "big 14" allergens that are relevant to this menu.
+enum Allergen {
+  GLUTEN
+  MILK
+  EGGS
+  NUTS
+  PEANUTS
+  SOY
+  SESAME
+  SULPHITES
+}
+
+enum DietaryTag {
+  VEGAN
+  VEGETARIAN
+  /// Vegan when ordered with oat milk.
+  VEGAN_OPTION
+}
+
+model MenuCategory {
+  id          String      @id @default(cuid())
+  name        String
+  slug        String      @unique
+  description String?
+  section     MenuSection
+  sortOrder   Int         @default(0)
+  items       MenuItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([sortOrder])
+}
+
+model MenuItem {
+  id                 String               @id @default(cuid())
+  name               String
+  slug               String               @unique
+  description        String
+  /// Price in minor units (cents) to avoid floating-point money.
+  priceCents         Int
+  categoryId         String
+  category           MenuCategory         @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  isAvailable        Boolean              @default(true)
+  /// Shown when an item is unavailable, e.g. "Returns in spring".
+  availabilityNote   String?
+  isFeatured         Boolean              @default(false)
+  imageUrl           String?
+  imageAlt           String?
+  dietaryTags        DietaryTag[]
+  /// Short method note shown in small caps, e.g. "Kalita Wave · 93°C".
+  brewNote           String?
+  sortOrder          Int                  @default(0)
+  ingredients        MenuItemIngredient[]
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  @@index([categoryId, sortOrder])
+  @@index([isFeatured])
+  @@index([isAvailable])
+}
+
+/// Allergens belong to ingredients, so an item's allergens are derived from
+/// what is in it rather than stored twice.
+model Ingredient {
+  id        String               @id @default(cuid())
+  name      String               @unique
+  allergens Allergen[]
+  items     MenuItemIngredient[]
+}
+
+model MenuItemIngredient {
+  menuItemId   String
+  ingredientId String
+  position     Int        @default(0)
+  menuItem     MenuItem   @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Restrict)
+
+  @@id([menuItemId, ingredientId])
+  @@index([ingredientId])
+}
+
+// ─── Brew bar reservations ───────────────────────────────────────────────────
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+model Reservation {
+  id        String            @id @default(cuid())
+  /// Short human-readable reference, e.g. "SC-7K2Q9F".
+  reference String            @unique
+  name      String
+  email     String
+  phone     String?
+  /// Start of the brew-bar session, stored in UTC.
+  slotStart DateTime          @db.Timestamptz(3)
+  partySize Int
+  note      String?
+  /// Always created as PENDING on the server; clients cannot set it.
+  status    ReservationStatus @default(PENDING)
+  createdAt DateTime          @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime          @updatedAt @db.Timestamptz(3)
+
+  @@index([slotStart, status])
+  @@index([email, slotStart])
+}
+
+// ─── Contact ─────────────────────────────────────────────────────────────────
+
+enum ContactTopic {
+  GENERAL
+  EVENTS
+  WHOLESALE
+  PRESS
+}
+
+enum ContactStatus {
+  NEW
+  READ
+  ARCHIVED
+}
+
+model ContactMessage {
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  topic     ContactTopic  @default(GENERAL)
+  message   String
+  status    ContactStatus @default(NEW)
+  createdAt DateTime      @default(now()) @db.Timestamptz(3)
+
+  @@index([status, createdAt])
+}
+
+// ─── Abuse protection ────────────────────────────────────────────────────────
+
+/// Fixed-window rate-limit counters. `key` is "<action>:<sha256(ip + salt)>";
+/// raw IP addresses are never stored.
+model RateLimitBucket {
+  key         String   @id
+  count       Int
+  windowStart DateTime @db.Timestamptz(3)
+}
