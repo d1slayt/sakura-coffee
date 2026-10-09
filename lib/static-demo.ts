@@ -5,8 +5,6 @@
  */
 export const isStaticDemo = process.env.NEXT_PUBLIC_STATIC_EXPORT === "1";
 
-export const repositoryUrl = process.env.NEXT_PUBLIC_REPO_URL ?? "";
-
 /** Prefixes a public path with the deployment base path (e.g. "/sakura-coffee"). */
 export function withBasePath(path: string): string {
   return `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;

@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Literata, Manrope } from "next/font/google";
-import { DemoBanner } from "@/components/layout/demo-banner";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { MotionProvider } from "@/components/motion-provider";
@@ -61,7 +60,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           {t.a11y.skipToContent}
         </a>
-        <DemoBanner />
         <MotionProvider>
           <SiteHeader />
           <main id="main" className="flex-1">

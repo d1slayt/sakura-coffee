@@ -43,10 +43,7 @@ const en = {
     today: "today",
     tomorrow: "tomorrow",
   },
-  staticDemo: {
-    badge: "Demo",
-    banner: "Static portfolio demo: the menu, search and forms run in your browser, with no server.",
-    link: "Full PostgreSQL version on GitHub",
+  staticDemo: {
     reservation:
       "This is the static demo on GitHub Pages: your details were validated but not sent. The full version stores the request in PostgreSQL and checks free seats.",
     contact:
