@@ -1,18 +1,19 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/site";
+import { withBasePath } from "@/lib/static-demo";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: siteConfig.name,
     short_name: siteConfig.name,
     description: siteConfig.shortDescription,
-    start_url: "/",
+    start_url: withBasePath("/"),
     display: "browser",
     background_color: "#f7f4ed",
     theme_color: "#f7f4ed",
     icons: [
-      { src: "/icon.svg", type: "image/svg+xml", sizes: "any" },
-      { src: "/apple-icon", type: "image/png", sizes: "180x180" },
+      { src: withBasePath("/icon.svg"), type: "image/svg+xml", sizes: "any" },
+      { src: withBasePath("/apple-icon"), type: "image/png", sizes: "180x180" },
     ],
   };
 }

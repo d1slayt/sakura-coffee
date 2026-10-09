@@ -1,41 +1,23 @@
 import "server-only";
 
 import { cacheLife, cacheTag } from "next/cache";
+import { connection } from "next/server";
 import { getDb } from "@/lib/db/client";
-import type { Allergen, DietaryTag, MenuSection, Prisma } from "@/lib/generated/prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
+import { ALLERGEN_ORDER, type MenuCategoryView, type MenuGroup, type MenuItemView } from "@/lib/menu-types";
 import type { MenuQuery } from "@/lib/validations/menu";
+import { buildMenuWhere } from "./menu-where";
 
-/** Public, serializable view of a menu item: the API contract for UI and REST. */
-export interface MenuItemView {
-  id: string;
-  name: string;
-  slug: string;
-  description: string;
-  priceCents: number;
-  isAvailable: boolean;
-  availabilityNote: string | null;
-  isFeatured: boolean;
-  imageUrl: string | null;
-  imageAlt: string | null;
-  brewNote: string | null;
-  dietaryTags: DietaryTag[];
-  ingredients: string[];
-  allergens: Allergen[];
-  category: { name: string; slug: string; section: MenuSection };
-}
+export type { MenuCategoryView, MenuGroup, MenuItemView } from "@/lib/menu-types";
+export { buildMenuWhere } from "./menu-where";
 
-export interface MenuCategoryView {
-  id: string;
-  name: string;
-  slug: string;
-  description: string | null;
-  section: MenuSection;
-  itemCount: number;
-}
-
-export interface MenuGroup {
-  category: Omit<MenuCategoryView, "itemCount">;
-  items: MenuItemView[];
+/**
+ * Marks the caller as request-time rendering, so the production build never
+ * needs the database. (The static GitHub Pages build swaps this module for
+ * demo/server/menu.ts, where it is a no-op.)
+ */
+export async function deferToRequest(): Promise<void> {
+  await connection();
 }
 
 const itemInclude = {
@@ -47,8 +29,6 @@ const itemInclude = {
 } satisfies Prisma.MenuItemInclude;
 
 type ItemRow = Prisma.MenuItemGetPayload<{ include: typeof itemInclude }>;
-
-const ALLERGEN_ORDER: Allergen[] = ["GLUTEN", "MILK", "EGGS", "NUTS", "PEANUTS", "SOY", "SESAME", "SULPHITES"];
 
 function toView(row: ItemRow): MenuItemView {
   const allergenSet = new Set(row.ingredients.flatMap((i) => i.ingredient.allergens));
@@ -69,46 +49,6 @@ function toView(row: ItemRow): MenuItemView {
     allergens: ALLERGEN_ORDER.filter((a) => allergenSet.has(a)),
     category: { name: row.category.name, slug: row.category.slug, section: row.category.section },
   };
-}
-
-const FREE_FROM_ALLERGEN = { gluten: "GLUTEN", milk: "MILK", nuts: "NUTS" } as const satisfies Record<
-  MenuQuery["free"][number],
-  Allergen
->;
-
-/** Builds the Prisma filter for a menu query. Exported for unit tests. */
-export function buildMenuWhere(query: MenuQuery): Prisma.MenuItemWhereInput {
-  const and: Prisma.MenuItemWhereInput[] = [];
-
-  if (query.q) {
-    const contains = { contains: query.q, mode: "insensitive" } as const;
-    and.push({
-      OR: [
-        { name: contains },
-        { description: contains },
-        { ingredients: { some: { ingredient: { name: contains } } } },
-      ],
-    });
-  }
-  if (query.category) and.push({ category: { slug: query.category } });
-  if (query.available) and.push({ isAvailable: true });
-
-  for (const diet of query.diet) {
-    // A vegan item is also vegetarian; "vegan option" items qualify as vegetarian
-    // because the default build is dairy-based but meat-free.
-    and.push({
-      dietaryTags: {
-        hasSome: diet === "vegan" ? ["VEGAN"] : ["VEGAN", "VEGETARIAN", "VEGAN_OPTION"],
-      },
-    });
-  }
-  for (const free of query.free) {
-    and.push({
-      ingredients: { none: { ingredient: { allergens: { has: FREE_FROM_ALLERGEN[free] } } } },
-    });
-  }
-
-  return and.length > 0 ? { AND: and } : {};
 }
 
 // ─── Queries ────────────────────────────────────────────────────────────────

@@ -1,0 +1,66 @@
+# Builds the static demo of SakuraCoffee and publishes it to GitHub Pages.
+# The repository keeps the full server app; this workflow derives the static
+# variant in the CI checkout (see scripts/prepare-pages.mjs) on every push to main.
+name: GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # prisma generate needs a URL in the config, but no database is contacted.
+      DATABASE_URL: postgresql://unused:unused@localhost:5432/unused
+      STATIC_EXPORT: "1"
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - id: pages
+        uses: actions/configure-pages@v5
+
+      - run: npm ci
+
+      - name: Prepare static variant
+        run: node scripts/prepare-pages.mjs
+
+      - name: Build
+        run: npx next build
+        env:
+          PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
+          NEXT_PUBLIC_REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+
+      - name: Fix prefetch segment paths for static hosting
+        run: node scripts/flatten-export-segments.mjs out
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -7,8 +7,37 @@ PostgreSQL с поиском и фильтрами по аллергенам, б
 > **Концептуальный бренд для портфолио.** Адрес, часы работы и лоты кофе — демо-данные
 > (на сайте помечены как «Демо-данные»). Фотографии с Unsplash, иллюстративные.
 
+**▶ Демо: https://d1slayt.github.io/sakura-coffee/**
+
 - Дизайн-направление: [docs/design-direction.md](docs/design-direction.md)
 - Архитектура, схема БД, API: [docs/architecture.md](docs/architecture.md)
+
+![Главная — первый экран](docs/screenshots/home-hero.png)
+
+| | |
+| --- | --- |
+| ![Избранное меню с превью](docs/screenshots/home-menu.png) | ![Метод](docs/screenshots/home-method.png) |
+| ![История — тёмный блок](docs/screenshots/home-story.png) | ![Зал — коллаж](docs/screenshots/home-room.png) |
+| ![Меню: поиск и фильтры по аллергенам](docs/screenshots/menu.png) | ![Бронирование стойки](docs/screenshots/booking.png) |
+
+<p>
+  <img src="docs/screenshots/mobile-home.png" alt="Мобильная версия — главная" width="260">
+  <img src="docs/screenshots/mobile-nav.png" alt="Мобильная навигация" width="260">
+</p>
+
+## Две сборки из одного кода
+
+| | Полная версия (`npm run build`) | Демо на GitHub Pages |
+| --- | --- | --- |
+| Меню | PostgreSQL, SQL-поиск и фильтры | те же seed-данные в бандле, фильтрация в браузере |
+| Бронь и контакт | Server Actions → PostgreSQL, rate limit, защита от гонок | та же Zod-валидация и правила дат, данные никуда не отправляются |
+| API `/api/*` | есть | нет (статический хостинг) |
+
+Демо собирает workflow [.github/workflows/pages.yml](.github/workflows/pages.yml) при каждом
+пуше в `main`: [scripts/prepare-pages.mjs](scripts/prepare-pages.mjs) в CI заменяет серверные
+модули на версии из [demo/](demo) с теми же экспортами, затем `next build` с `output: "export"`.
+Интеграционный тест [static-parity](tests/integration/static-parity.test.ts) сверяет, что браузерный
+фильтр выдаёт ровно то же, что SQL-версия.
 
 ## Стек
 

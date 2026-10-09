@@ -1,7 +1,8 @@
 "use client";
 
 import { useActionState, useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { brewBar, bookingWindow, type SessionTime } from "@/lib/booking";
+import { brewBar, bookingWindow, checkBookingDate, dateRuleMessages, type SessionTime } from "@/lib/booking";
+import { isStaticDemo } from "@/lib/static-demo";
 import { idleState, type FormState } from "@/lib/form-state";
 import { cn } from "@/lib/utils";
 import { submitReservation, type ReservationField } from "@/server/actions";
@@ -18,6 +19,7 @@ export interface ReservationLabels {
   seatsFull: string;
   seatsOne: string;
   seatsMany: string;
+  sessionLength: string;
   partySize: string;
   name: string;
   email: string;
@@ -89,7 +91,8 @@ function ReservationFormInner({ labels, onReset }: { labels: ReservationLabels; 
             <span className="font-semibold tracking-wider tabular">{state.reference}</span>
           </p>
         ) : null}
-        <p className="text-sm text-muted">{labels.demoSuccess}</p>
+        {/* In the static demo the action's own message already explains that nothing was stored. */}
+        {isStaticDemo ? null : <p className="text-sm text-muted">{labels.demoSuccess}</p>}
       </FormSuccess>
     );
   }
@@ -126,6 +129,19 @@ function ReservationFields({
     request.current?.abort();
     if (!nextDate) {
       setAvailability({ state: "idle" });
+      return;
+    }
+    if (isStaticDemo) {
+      // No server in the static demo: apply the same calendar rules locally and show every seat as free.
+      const violation = checkBookingDate(nextDate, new Date());
+      setAvailability(
+        violation
+          ? { state: "closed", message: dateRuleMessages[violation] }
+          : {
+              state: "ready",
+              slots: brewBar.sessionTimes.map((time) => ({ time, seatsLeft: brewBar.seatsPerSession, available: true })),
+            },
+      );
       return;
     }
     const controller = new AbortController();
@@ -249,7 +265,7 @@ function ReservationFields({
                 />
                 <span className="text-lg font-semibold tabular">{slot.time}</span>
                 <span className={cn("text-xs", time === slot.time ? "text-ivory-dim" : "text-muted")}>
-                  {slotsKnown ? seatsLabel(slot.seatsLeft) : `${brewBar.sessionMinutes} min`}
+                  {slotsKnown ? seatsLabel(slot.seatsLeft) : labels.sessionLength.replace("{n}", String(brewBar.sessionMinutes))}
                 </span>
               </label>
             );

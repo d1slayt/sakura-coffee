@@ -1,12 +1,11 @@
 import type { MetadataRoute } from "next";
-import { connection } from "next/server";
 import { logServerError } from "@/lib/db/errors";
 import { absoluteUrl } from "@/lib/utils";
-import { getMenuItemSlugs } from "@/server/menu";
+import { deferToRequest, getMenuItemSlugs } from "@/server/menu";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Generated per request (and cached by getMenuItemSlugs) so builds don't need the database.
-  await connection();
+  await deferToRequest();
 
   const pages: MetadataRoute.Sitemap = [
     { url: absoluteUrl("/"), changeFrequency: "monthly", priority: 1 },

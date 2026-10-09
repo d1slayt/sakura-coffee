@@ -43,6 +43,15 @@ const en = {
     today: "today",
     tomorrow: "tomorrow",
   },
+  staticDemo: {
+    badge: "Demo",
+    banner: "Static portfolio demo: the menu, search and forms run in your browser, with no server.",
+    link: "Full PostgreSQL version on GitHub",
+    reservation:
+      "This is the static demo on GitHub Pages: your details were validated but not sent. The full version stores the request in PostgreSQL and checks free seats.",
+    contact:
+      "This is the static demo on GitHub Pages: your message was validated but not sent. The full version stores it in the database.",
+  },
   demo: {
     badge: "Demo details",
     notice: "SakuraCoffee is a concept brand. This address and these hours are placeholders.",
@@ -263,6 +272,7 @@ const en = {
       seatsFull: "Full",
       seatsOne: "1 seat left",
       seatsMany: "{n} seats left",
+      sessionLength: "{n} min",
       partySize: "Guests",
       name: "Name",
       email: "Email",

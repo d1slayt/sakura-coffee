@@ -1,7 +1,6 @@
 import { Suspense } from "react";
-import { connection } from "next/server";
 import { getDictionary } from "@/lib/i18n";
-import { getFeaturedMenuItems } from "@/server/menu";
+import { deferToRequest, getFeaturedMenuItems } from "@/server/menu";
 import { FeaturedList } from "@/components/menu/featured-list";
 import { ActionLink } from "@/components/ui/action";
 import { DataBoundary } from "@/components/ui/data-boundary";
@@ -11,7 +10,7 @@ import { SectionLabel } from "@/components/ui/section-label";
 async function FeaturedItems() {
   // Read at request time (cached for minutes by getFeaturedMenuItems), so the
   // static shell — and the production build — never depends on the database.
-  await connection();
+  await deferToRequest();
   const t = getDictionary().home.featured;
   const items = await getFeaturedMenuItems();
   if (items.length === 0) return <p className="border-y border-line py-10 text-muted">{t.empty}</p>;
