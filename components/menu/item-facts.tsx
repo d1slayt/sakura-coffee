@@ -9,7 +9,7 @@ export function DietaryTags({ tags, className }: { tags: MenuItemView["dietaryTa
   return (
     <ul className={cn("flex flex-wrap gap-x-3", className)} aria-label={t.menu.dietaryLabel}>
       {tags.map((tag) => (
-        <li key={tag} className="meta text-sage">
+        <li key={tag} className="meta text-pine">
           {tag === "VEGAN_OPTION" ? t.menu.veganOption : t.dietary[tag]}
         </li>
       ))}
@@ -23,7 +23,7 @@ export function IngredientFacts({ item, className }: { item: Pick<MenuItemView, 
   return (
     <dl className={cn("grid gap-x-4 gap-y-1 text-sm sm:grid-cols-[6.5rem_1fr]", className)}>
       <dt className="meta pt-0.5 text-muted">{t.menu.ingredients}</dt>
-      <dd className="text-coffee">{item.ingredients.join(", ")}</dd>
+      <dd className="text-ink">{item.ingredients.join(", ")}</dd>
       <dt className="meta pt-0.5 text-muted">{t.menu.allergens}</dt>
       <dd className={item.allergens.length > 0 ? "font-semibold text-ink" : "text-muted"}>
         {item.allergens.length > 0 ? item.allergens.map((a) => t.allergens[a]).join(", ") : t.menu.noAllergens}

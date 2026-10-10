@@ -19,19 +19,19 @@ export default function OpengraphImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          background: "#f7f4ed",
-          color: "#241c19",
+          background: "#244c3b",
+          color: "#e9e7df",
           padding: "72px",
           flexDirection: "column",
           justifyContent: "space-between",
         }}
       >
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <OgBlossom size={220} petal="#c9858d" crease="#f7f4ed" />
+          <OgBlossom size={220} petal="#d9a6a0" crease="#244c3b" />
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", fontSize: 128, letterSpacing: -4, lineHeight: 1 }}>SakuraCoffee</div>
-          <div style={{ display: "flex", marginTop: 28, height: 3, width: "100%", background: "#241c19" }} />
+          <div style={{ display: "flex", marginTop: 28, height: 3, width: "100%", background: "#a9aaa5" }} />
         </div>
       </div>
     ),

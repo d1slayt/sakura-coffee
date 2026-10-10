@@ -20,29 +20,13 @@ export const photos = {
     src: photoPath("hero-pour"),
     alt: "Рука держит керамическую чашку в крапинку, в неё наливают кофе из стеклянного сервировочного чайника",
   },
-  storyPourOver: {
-    src: photoPath("story-pour-over"),
-    alt: "Руки поднимают бумажный фильтр с кофе над стеклянной колбой на светлой стойке",
-  },
-  storyBlossom: {
-    src: photoPath("story-blossom"),
-    alt: "Бледно-розовые цветы сакуры на ветке на фоне чистого неба",
-  },
   philosophyBeans: {
     src: photoPath("philosophy-beans"),
     alt: "Крупный план кофейных зёрен средней обжарки",
   },
-  philosophyEspresso: {
-    src: photoPath("philosophy-espresso"),
-    alt: "Эспрессо стекает из металлического портафильтра в белую чашку",
-  },
   atmosphereWindow: {
     src: photoPath("atmosphere-window"),
     alt: "Деревянный столик у окна: чашка кофе, раскрытый блокнот и растение при дневном свете",
-  },
-  atmosphereTable: {
-    src: photoPath("atmosphere-table"),
-    alt: "Маленький круглый столик у высоких окон в окружении растений",
   },
   atmosphereBar: {
     src: photoPath("atmosphere-bar"),

@@ -9,7 +9,7 @@ export default function RouteError({ retry }: { error: Error & { digest?: string
   return (
     <div className="container-page grid min-h-[60dvh] content-center py-24">
       <h1 className="font-display text-display-l">{t.title}</h1>
-      <p className="mt-4 max-w-[42ch] text-lede text-coffee">{t.body}</p>
+      <p className="mt-4 max-w-[42ch] text-lede text-ink">{t.body}</p>
       <div className="mt-8">
         <ActionButton onClick={() => retry()}>{t.retry}</ActionButton>
       </div>

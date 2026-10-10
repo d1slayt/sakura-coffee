@@ -9,8 +9,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: siteConfig.shortDescription,
     start_url: withBasePath("/"),
     display: "browser",
-    background_color: "#f7f4ed",
-    theme_color: "#f7f4ed",
+    background_color: "#e9e7df",
+    theme_color: "#e9e7df",
     icons: [
       { src: withBasePath("/icon.svg"), type: "image/svg+xml", sizes: "any" },
       { src: withBasePath("/apple-icon"), type: "image/png", sizes: "180x180" },

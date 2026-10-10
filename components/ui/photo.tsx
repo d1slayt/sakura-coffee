@@ -7,10 +7,8 @@ interface PhotoProps {
   /** Responsive `sizes` attribute; required so the browser fetches the right width. */
   sizes: string;
   /** Aspect ratio of the frame, e.g. "4/5". The image covers the frame. */
-  ratio: string;
+  ratio?: string;
   caption?: string;
-  /** Rotated caption along the left edge (method notes). */
-  verticalCaption?: string;
   /** Above-the-fold images load eagerly with high priority. */
   priority?: boolean;
   className?: string;
@@ -20,15 +18,14 @@ interface PhotoProps {
 }
 
 /**
- * An editorial figure: a fixed-ratio frame, optional numbered caption below,
- * optional vertical caption beside it. Square corners by design.
+ * A photograph in a fixed-ratio frame with an optional plain caption.
+ * Without `ratio` the frame fills its parent (the parent sets the height).
  */
 export function Photo({
   photo,
   sizes,
   ratio,
   caption,
-  verticalCaption,
   priority,
   className,
   frameClassName,
@@ -37,30 +34,22 @@ export function Photo({
 }: PhotoProps) {
   return (
     <figure className={cn("relative", className)}>
-      <div className="flex gap-3">
-        {verticalCaption ? (
-          <p aria-hidden className="meta vertical-caption hidden self-end text-muted sm:block">
-            {verticalCaption}
-          </p>
-        ) : null}
-        <div className={cn("relative w-full overflow-hidden bg-paper", frameClassName)} style={{ aspectRatio: ratio }}>
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            fill
-            sizes={sizes}
-            quality={70}
-            loading={priority ? "eager" : "lazy"}
-            fetchPriority={priority ? "high" : undefined}
-            className={cn("object-cover", imageClassName)}
-          />
-        </div>
+      <div
+        className={cn("relative w-full overflow-hidden bg-paper-deep", !ratio && "h-full", frameClassName)}
+        style={ratio ? { aspectRatio: ratio } : undefined}
+      >
+        <Image
+          src={photo.src}
+          alt={photo.alt}
+          fill
+          sizes={sizes}
+          quality={70}
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : undefined}
+          className={cn("object-cover", imageClassName)}
+        />
       </div>
-      {caption ? (
-        <figcaption className={cn("mt-3 font-display text-[0.9375rem] italic text-muted", verticalCaption && "sm:pl-7", captionClassName)}>
-          {caption}
-        </figcaption>
-      ) : null}
+      {caption ? <figcaption className={cn("meta mt-3 font-medium text-muted", captionClassName)}>{caption}</figcaption> : null}
     </figure>
   );
 }

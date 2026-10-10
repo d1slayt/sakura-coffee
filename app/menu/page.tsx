@@ -7,7 +7,6 @@ import { getMenuCategories, searchMenu } from "@/server/menu";
 import { MenuFilters } from "@/components/menu/menu-filters";
 import { MenuResults } from "@/components/menu/menu-results";
 import { DataBoundary } from "@/components/ui/data-boundary";
-import { EmphasisText } from "@/components/ui/emphasis";
 
 const t = getDictionary();
 
@@ -52,7 +51,7 @@ async function MenuBrowser({ searchParams }: { searchParams: PageProps<"/menu">[
         <div className="border-t border-line py-16">
           <p className="font-display text-display-s">{t.menu.emptyTitle}</p>
           <p className="mt-2 text-muted">{t.menu.emptyBody}</p>
-          <Link href="/menu" className="meta mt-6 inline-flex min-h-11 items-center text-rose-ink hover:text-ink">
+          <Link href="/menu" className="meta mt-6 inline-flex min-h-11 items-center text-pine hover:text-ink">
             {t.menu.clear}
           </Link>
         </div>
@@ -64,14 +63,14 @@ async function MenuBrowser({ searchParams }: { searchParams: PageProps<"/menu">[
 function MenuSkeleton() {
   return (
     <div aria-hidden>
-      <div className="h-[11.5rem] border-y border-line-strong bg-ivory" />
+      <div className="h-[11.5rem] border-y border-line-strong bg-paper" />
       <p className="meta mt-6 mb-10 text-muted">{t.menu.loading}</p>
       {[0, 1, 2].map((i) => (
         <div key={i} className="grid gap-6 border-t border-line py-8 md:grid-cols-12">
-          <div className="h-10 bg-paper md:col-span-3" />
+          <div className="h-10 bg-paper-deep md:col-span-3" />
           <div className="space-y-3 md:col-span-8 md:col-start-5">
-            <div className="h-7 w-1/2 bg-paper" />
-            <div className="h-4 w-4/5 bg-paper" />
+            <div className="h-7 w-1/2 bg-paper-deep" />
+            <div className="h-4 w-4/5 bg-paper-deep" />
           </div>
         </div>
       ))}
@@ -82,14 +81,11 @@ function MenuSkeleton() {
 export default function MenuPage(props: PageProps<"/menu">) {
   return (
     <div className="container-page pt-12 pb-(--spacing-section) md:pt-20">
-      <header className="grid gap-y-6 pb-12 md:grid-cols-12 md:gap-x-6 md:pb-16">
-        <p className="meta text-muted md:col-span-12">{t.menu.eyebrow}</p>
-        <h1 className="font-display text-display-xl md:col-span-7">
-          <EmphasisText value={t.menu.title} />
-        </h1>
-        <div className="self-end md:col-span-4 md:col-start-9">
-          <p className="text-lede text-coffee">{t.menu.intro}</p>
-          <p className="mt-4 text-sm text-muted">{t.menu.allergenNote}</p>
+      <header className="grid gap-y-5 pb-10 md:grid-cols-12 md:gap-x-6 md:pb-14">
+        <h1 className="font-display text-display-xl md:col-span-6">{t.menu.title}</h1>
+        <div className="self-end md:col-span-5 md:col-start-8">
+          <p className="text-lede">{t.menu.intro}</p>
+          <p className="mt-3 text-sm text-muted">{t.menu.allergenNote}</p>
         </div>
       </header>
 

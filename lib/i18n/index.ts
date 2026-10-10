@@ -1,7 +1,7 @@
 import en, { type Dictionary } from "./dictionaries/en";
 import ru from "./dictionaries/ru";
 
-export type { Dictionary, Emphasis } from "./dictionaries/en";
+export type { Dictionary } from "./dictionaries/en";
 
 export const locales = ["ru", "en"] as const;
 export type Locale = (typeof locales)[number];

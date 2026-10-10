@@ -12,7 +12,6 @@ import { getMenuItemBySlug } from "@/server/menu";
 import { DietaryTags, IngredientFacts } from "@/components/menu/item-facts";
 import { JsonLd } from "@/components/json-ld";
 import { ActionLink } from "@/components/ui/action";
-import { BlossomMark } from "@/components/ui/blossom-mark";
 import { DataBoundary } from "@/components/ui/data-boundary";
 
 const t = getDictionary();
@@ -63,7 +62,7 @@ async function MenuItemDetail({ params }: { params: PageProps<"/menu/[slug]">["p
         }}
       />
       <div className="md:col-span-6 lg:col-span-5">
-        <div className="relative aspect-[4/5] overflow-hidden bg-paper">
+        <div className="relative aspect-[4/5] overflow-hidden bg-paper-deep">
           {item.imageUrl ? (
             <Image
               src={item.imageUrl}
@@ -76,9 +75,8 @@ async function MenuItemDetail({ params }: { params: PageProps<"/menu/[slug]">["p
               className="object-cover"
             />
           ) : (
-            <div className={cn("flex h-full flex-col items-center justify-center gap-6 p-8 text-center", item.isAvailable ? "bg-paper" : "bg-sakura")}>
-              <BlossomMark className="size-24 text-rose-ink" />
-              <p className="font-display text-display-s italic">{item.name}</p>
+            <div className={cn("flex h-full items-end p-8", item.isAvailable ? "bg-paper-deep" : "bg-pink")}>
+              <p className="font-display text-display-l">{item.name}</p>
             </div>
           )}
         </div>
@@ -92,17 +90,14 @@ async function MenuItemDetail({ params }: { params: PageProps<"/menu/[slug]">["p
         </p>
         <h1 className="mt-4 font-display text-display-l">{item.name}</h1>
         <DietaryTags tags={item.dietaryTags} className="mt-4" />
-        <p className="mt-6 max-w-[48ch] text-lede text-coffee">{item.description}</p>
+        <p className="mt-6 max-w-[48ch] text-lede">{item.description}</p>
 
         <div className="mt-8 flex items-baseline justify-between border-y border-line py-5">
           <span className="meta text-muted">{item.brewNote ?? item.category.name}</span>
           {item.isAvailable ? (
             <span className="text-2xl font-semibold tabular">{formatPrice(item.priceCents)}</span>
           ) : (
-            <span className="meta inline-flex items-center gap-2 text-rose-ink">
-              <BlossomMark className="size-3.5" />
-              {item.availabilityNote ?? t.menu.unavailable}
-            </span>
+            <span className="meta bg-pink px-1.5 py-0.5 text-ink">{item.availabilityNote ?? t.menu.unavailable}</span>
           )}
         </div>
 
@@ -123,11 +118,11 @@ async function MenuItemDetail({ params }: { params: PageProps<"/menu/[slug]">["p
 function DetailSkeleton() {
   return (
     <div aria-hidden className="grid gap-y-12 md:grid-cols-12 md:gap-x-6">
-      <div className="aspect-[4/5] bg-paper md:col-span-6 lg:col-span-5" />
+      <div className="aspect-[4/5] bg-paper-deep md:col-span-6 lg:col-span-5" />
       <div className="space-y-4 md:col-span-6 lg:col-start-7">
-        <div className="h-4 w-24 bg-paper" />
-        <div className="h-16 w-3/4 bg-paper" />
-        <div className="h-24 bg-paper" />
+        <div className="h-4 w-24 bg-paper-deep" />
+        <div className="h-16 w-3/4 bg-paper-deep" />
+        <div className="h-24 bg-paper-deep" />
       </div>
     </div>
   );

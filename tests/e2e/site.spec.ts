@@ -6,16 +6,16 @@ async function expectNoHorizontalScroll(page: Page) {
 }
 
 test.describe("home", () => {
-  test("renders the editorial hero, featured menu and footer", async ({ page }) => {
+  test("renders the hero, featured menu and footer", async ({ page }) => {
     await page.goto("/");
     await expect(page).toHaveTitle(/SakuraCoffee/);
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Две вишни");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Эспрессо, фильтр");
     await expect(page.locator("html")).toHaveAttribute("lang", "ru");
 
     const featured = page.locator("section[aria-labelledby='featured-title']");
     await expect(featured.getByRole("link", { name: /Флэт уайт/ })).toBeVisible();
     await expect(featured.getByText("Вернётся весной, вместе с цветами.")).toBeVisible();
-    await expect(page.locator("footer")).toContainText("Демо-данные");
+    await expect(page.locator("footer")).toContainText("Концептуальный бренд");
 
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await expectNoHorizontalScroll(page);
@@ -32,7 +32,7 @@ test.describe("home", () => {
     // Images inside display:none containers (the other breakpoint's layout) are skipped.
     const images = page.locator("main img").filter({ visible: true });
     const count = await images.count();
-    expect(count).toBeGreaterThan(5);
+    expect(count).toBeGreaterThanOrEqual(3);
     for (let i = 0; i < count; i++) {
       const img = images.nth(i);
       await expect(img).toHaveAttribute("alt", /.*/);
@@ -77,7 +77,7 @@ test.describe("navigation", () => {
   test("unknown routes render the 404 page", async ({ page }) => {
     const response = await page.goto("/this-page-does-not-exist");
     expect(response?.status()).toBe(404);
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("отцвела");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Такой страницы нет");
   });
 
   test("main navigation is keyboard reachable", async ({ page, isMobile }) => {

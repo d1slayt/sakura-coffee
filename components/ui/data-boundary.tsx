@@ -24,7 +24,7 @@ function DataFallback({ title, body, retryLabel, className }: FallbackProps, { r
       <button
         type="button"
         onClick={() => retry()}
-        className="meta mt-6 inline-flex min-h-11 items-center gap-2 text-ink hover:text-rose-ink"
+        className="meta mt-6 inline-flex min-h-11 items-center gap-2 text-ink hover:text-pine"
       >
         <RotateCcw aria-hidden className="size-4" strokeWidth={1.5} />
         {retryLabel}

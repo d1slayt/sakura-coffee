@@ -17,6 +17,11 @@ export function formatPrice(minorUnits: number): string {
   return priceFormatter.format(minorUnits / 100);
 }
 
+/** "07:30" → "7:30" for display; the config keeps zero-padded HH:mm. */
+export function displayTime(time: string): string {
+  return time.replace(/^0/, "");
+}
+
 /** Absolute URL for metadata, sitemap and JSON-LD. */
 export function absoluteUrl(path = "/"): string {
   return `${siteConfig.url}${path.startsWith("/") ? path : `/${path}`}`;

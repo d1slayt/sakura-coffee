@@ -5,29 +5,29 @@ import { cn } from "@/lib/utils";
 
 /**
  * Buttons and button-like links share one set of styles.
- *  - solid:   the single primary action in a view (ink block, square corners)
+ *  - solid:   the single primary action in a view (pine block, square corners)
  *  - outline: secondary action, hairline frame
  *  - text:    inline action with a drawn underline
- * Tone "inverse" is for dark surfaces.
+ * Tone "inverse" is for the pine and graphite surfaces.
  */
 type Variant = "solid" | "outline" | "text";
 type Tone = "default" | "inverse";
 
 const base =
-  "group/action inline-flex items-center gap-3 font-sans text-[0.9375rem] font-semibold tracking-[0.01em] transition-colors duration-(--duration-quick) disabled:cursor-not-allowed disabled:opacity-50";
+  "inline-flex items-center gap-3 font-sans text-[0.9375rem] font-semibold tracking-[0.01em] transition-colors duration-(--duration-quick) disabled:cursor-not-allowed disabled:opacity-50";
 
 const variants: Record<Variant, Record<Tone, string>> = {
   solid: {
-    default: "min-h-12 bg-ink px-6 text-ivory hover:bg-coffee",
-    inverse: "min-h-12 bg-ivory px-6 text-ink hover:bg-sakura",
+    default: "min-h-12 bg-pine px-6 text-paper hover:bg-pine-deep",
+    inverse: "min-h-12 bg-paper px-6 text-ink hover:bg-pink",
   },
   outline: {
-    default: "min-h-12 border border-line-strong px-6 text-ink hover:border-ink hover:bg-ink hover:text-ivory",
-    inverse: "min-h-12 border border-line-inverse px-6 text-ivory hover:border-ivory hover:bg-ivory hover:text-ink",
+    default: "min-h-12 border border-control px-6 text-ink hover:border-pine hover:bg-pine hover:text-paper",
+    inverse: "min-h-12 border border-line-inverse px-6 text-paper hover:border-paper hover:bg-paper hover:text-ink",
   },
   text: {
-    default: "min-h-11 text-ink",
-    inverse: "min-h-11 text-ivory",
+    default: "min-h-11 text-pine",
+    inverse: "min-h-11 text-paper",
   },
 };
 
@@ -41,7 +41,7 @@ function Arrow({ external }: { external?: boolean }) {
     <Icon
       aria-hidden
       strokeWidth={1.5}
-      className="size-4 transition-transform duration-(--duration-base) ease-(--ease-soft) group-hover/action:translate-x-1"
+      className="size-4"
     />
   );
 }

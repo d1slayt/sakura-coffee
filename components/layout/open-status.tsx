@@ -34,7 +34,7 @@ export function OpenStatus({ labels, className }: { labels: Labels; className?: 
         <>
           <span
             aria-hidden
-            className={cn("size-1.5 rounded-full", state.open ? "bg-sage" : "bg-line-strong")}
+            className={cn("size-1.5 rounded-full", state.open ? "bg-pink" : "bg-steel")}
           />
           {state.open ? (
             <span>

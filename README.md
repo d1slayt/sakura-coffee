@@ -1,11 +1,11 @@
 # SakuraCoffee
 
-Сайт небольшого эспрессо-бара с японским влиянием: редакционный дизайн, меню из
-PostgreSQL с поиском и фильтрами по аллергенам, бронирование стойки альтернативы с
+Сайт небольшой кофейни в духе современного японского kissaten: хвойно-зелёная
+«витрина», печатное меню и крупные часы работы. Меню из PostgreSQL с поиском и фильтрами по аллергенам, бронирование стойки альтернативы с
 защитой от овербукинга, форма обратной связи.
 
 > **Концептуальный бренд для портфолио.** Адрес, часы работы и лоты кофе — демо-данные
-> (на сайте помечены как «Демо-данные»). Фотографии с Unsplash, иллюстративные.
+> (на сайте это сказано прямо). Фотографии с Unsplash, иллюстративные.
 
 **▶ Демо: https://d1slayt.github.io/sakura-coffee/**
 
@@ -16,9 +16,9 @@ PostgreSQL с поиском и фильтрами по аллергенам, б
 
 | | |
 | --- | --- |
-| ![Избранное меню с превью](docs/screenshots/home-menu.png) | ![Метод](docs/screenshots/home-method.png) |
-| ![История — тёмный блок](docs/screenshots/home-story.png) | ![Зал — коллаж](docs/screenshots/home-room.png) |
-| ![Меню: поиск и фильтры по аллергенам](docs/screenshots/menu.png) | ![Бронирование стойки](docs/screenshots/booking.png) |
+| ![Меню на главной](docs/screenshots/home-menu.png) | ![Зал и стойка](docs/screenshots/home-room.png) |
+| ![Часы работы](docs/screenshots/home-hours.png) | ![Меню: поиск и фильтры по аллергенам](docs/screenshots/menu.png) |
+| ![Бронирование стойки](docs/screenshots/booking.png) | |
 
 <p>
   <img src="docs/screenshots/mobile-home.png" alt="Мобильная версия — главная" width="260">

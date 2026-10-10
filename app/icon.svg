@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-24 -24 48 48">
-  <rect x="-24" y="-24" width="48" height="48" fill="#f7f4ed"/>
+  <rect x="-24" y="-24" width="48" height="48" fill="#244c3b"/>
   <mask id="m">
     <rect x="-24" y="-24" width="48" height="48" fill="#fff"/>
     <g fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round">
@@ -10,7 +10,7 @@
       <path d="M0,-19 C1.6,-15 -1.6,-9 0,-4.5" transform="rotate(288)"/>
     </g>
   </mask>
-  <g mask="url(#m)" fill="#c9858d">
+  <g mask="url(#m)" fill="#d9a6a0">
     <ellipse cx="0" cy="-12" rx="6.2" ry="9"/>
     <ellipse cx="0" cy="-12" rx="6.2" ry="9" transform="rotate(72)"/>
     <ellipse cx="0" cy="-12" rx="6.2" ry="9" transform="rotate(144)"/>

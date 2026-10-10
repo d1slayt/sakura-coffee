@@ -47,7 +47,7 @@ export function hoursForWeekday(day: Weekday): OpeningHours | undefined {
 
 /** Main navigation. Labels come from the dictionary (`nav.items[key]`). */
 export const navigation = [
-  { href: "/menu", key: "menu", index: "01" },
-  { href: "/about", key: "story", index: "02" },
-  { href: "/visit", key: "visit", index: "03" },
+  { href: "/menu", key: "menu" },
+  { href: "/about", key: "story" },
+  { href: "/visit", key: "visit" },
 ] as const;

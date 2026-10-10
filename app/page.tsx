@@ -1,8 +1,6 @@
-import { Atmosphere } from "@/components/sections/atmosphere";
-import { BrandStory } from "@/components/sections/brand-story";
 import { FeaturedMenu } from "@/components/sections/featured-menu";
 import { Hero } from "@/components/sections/hero";
-import { Philosophy } from "@/components/sections/philosophy";
+import { Room } from "@/components/sections/room";
 import { VisitSummary } from "@/components/sections/visit-summary";
 import { JsonLd } from "@/components/json-ld";
 import { absoluteUrl } from "@/lib/utils";
@@ -26,10 +24,8 @@ export default function HomePage() {
         }}
       />
       <Hero />
-      <BrandStory />
       <FeaturedMenu />
-      <Philosophy />
-      <Atmosphere />
+      <Room />
       <VisitSummary />
     </>
   );

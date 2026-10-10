@@ -1,78 +1,55 @@
 import { getDictionary } from "@/lib/i18n";
 import { photos } from "@/lib/images";
+import { siteConfig } from "@/lib/site";
+import { displayTime } from "@/lib/utils";
+import { OpenStatus } from "@/components/layout/open-status";
 import { ActionLink } from "@/components/ui/action";
-import { BlossomMark } from "@/components/ui/blossom-mark";
-import { EmphasisText } from "@/components/ui/emphasis";
 import { Photo } from "@/components/ui/photo";
-import { cn } from "@/lib/utils";
-
-const STAGGER = ["", "pl-[0.6em]", "pl-[1.2em]"];
 
 /**
- * Editorial split: a staggered two-line headline on seven columns, a tall
- * photograph with a vertical method caption on five, and an "on the bar
- * today" strip that closes the first screen like a magazine contents line.
+ * The shopfront: a pine-green plane with what the place is and when it's open,
+ * and a photograph that runs to the edge of the screen. On phones the photo
+ * comes first and the green block follows it.
  */
 export function Hero() {
-  const t = getDictionary().home.hero;
+  const dict = getDictionary();
+  const t = dict.home.hero;
 
   return (
-    <section aria-labelledby="hero-title" className="container-page pt-6 md:pt-10">
-      <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-6">
-        <div className="flex flex-col md:col-span-7 md:pr-6">
-          <div className="meta flex items-center justify-between gap-4 border-b border-line pb-3 text-muted">
-            <span>{t.eyebrow}</span>
-            <span className="tabular">{t.issue}</span>
-          </div>
+    <section aria-labelledby="hero-title" className="surface-dark bg-pine text-paper">
+      <div className="grid lg:min-h-[min(calc(100svh-var(--spacing-header)),56rem)] lg:grid-cols-2">
+        <Photo
+          photo={photos.heroPour}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          priority
+          className="aspect-[4/3] sm:aspect-[16/10] lg:order-last lg:aspect-auto"
+          imageClassName="object-[50%_60%]"
+        />
 
-          <h1 id="hero-title" className="mt-10 font-display text-display-xl md:mt-16 lg:mt-24">
-            {/* Three staggered lines, like a column of type stepping down the page. */}
-            {t.title.map((line, i) => (
-              <span key={i} className={cn("block", STAGGER[i])}>
-                <EmphasisText value={line} emClassName="text-coffee" />
-                {i === t.title.length - 1 ? (
-                  // The one sakura detail on the first screen, set like a superscript after the full stop.
-                  <BlossomMark className="ml-[0.1em] inline-block size-[0.3em] align-[0.55em] text-rose" />
-                ) : null}
-              </span>
-            ))}
+        <div className="flex flex-col px-(--spacing-gutter) pt-10 pb-8 sm:pt-14 lg:pt-16 lg:pr-12 lg:pl-[max(var(--spacing-gutter),calc((100vw-var(--container-page))/2+var(--spacing-gutter)))]">
+          <p className="meta text-pine-soft">{t.kicker}</p>
+          <h1 id="hero-title" className="mt-5 max-w-[14ch] font-display text-display-xl">
+            {t.title}
           </h1>
+          <p className="mt-6 max-w-[42ch] text-lede">{t.intro}</p>
+          <ActionLink href="/menu" tone="inverse" className="mt-8 self-start">
+            {t.primaryCta}
+          </ActionLink>
 
-          <div className="mt-10 flex flex-col gap-8 md:mt-auto md:pt-14 lg:flex-row lg:items-end lg:justify-between">
-            <p className="max-w-[36ch] text-lede text-coffee">{t.intro}</p>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-              <ActionLink href="/menu">{t.primaryCta}</ActionLink>
-              <ActionLink href="/visit#book" variant="text" arrow={false}>
-                {t.secondaryCta}
-              </ActionLink>
-            </div>
+          <div className="mt-12 flex flex-wrap items-end gap-x-10 gap-y-4 border-t border-line-inverse pt-5 lg:mt-auto">
+            <dl className="flex flex-wrap gap-x-10 gap-y-3">
+              {siteConfig.hours.map((h) => (
+                <div key={h.id}>
+                  <dt className="meta text-pine-soft">{dict.hoursShort[h.id]}</dt>
+                  <dd className="tabular">
+                    {displayTime(h.opens)}–{displayTime(h.closes)}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <OpenStatus labels={dict.status} className="text-paper sm:ml-auto" />
           </div>
         </div>
-
-        <div className="md:col-span-5">
-          <Photo
-            photo={photos.heroPour}
-            ratio="4/5"
-            sizes="(min-width: 1440px) 560px, (min-width: 768px) 40vw, 100vw"
-            priority
-            verticalCaption={t.verticalCaption}
-            caption={t.figure}
-            imageClassName="object-[50%_60%]"
-          />
-        </div>
-      </div>
-
-      <div className="mt-12 grid gap-6 border-t border-line py-6 sm:grid-cols-2 md:mt-16 lg:grid-cols-[minmax(0,14rem)_repeat(3,minmax(0,1fr))]">
-        <p className="meta flex items-center gap-2 text-ink sm:col-span-2 lg:col-span-1">
-          <BlossomMark className="size-4 text-rose" />
-          {t.onBarTitle}
-        </p>
-        {t.onBar.map((item) => (
-          <p key={item.label} className="flex flex-col gap-1">
-            <span className="meta text-muted">{item.label}</span>
-            <span className="font-display text-xl">{item.value}</span>
-          </p>
-        ))}
       </div>
     </section>
   );

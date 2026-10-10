@@ -7,7 +7,7 @@ import { chromium } from "@playwright/test";
 const base = process.env.SCREENSHOT_BASE_URL ?? "http://localhost:3000";
 const out = "docs/screenshots";
 
-/** Scroll through the page so scroll-triggered reveals have run. */
+/** Scroll through the page so lazy images have loaded. */
 async function warmUp(page) {
   await page.evaluate(async () => {
     for (let y = 0; y < document.body.scrollHeight; y += 500) {
@@ -41,10 +41,9 @@ await desktop.goto(base, { waitUntil: "networkidle" });
 await warmUp(desktop);
 await desktop.screenshot({ path: `${out}/home-hero.png` });
 console.log("saved home-hero.png");
-await shotAt(desktop, "#story-title", "home-story.png", 160);
 await shotAt(desktop, "#featured-title", "home-menu.png", 140);
-await shotAt(desktop, "#method-title", "home-method.png", 140);
-await shotAt(desktop, "#room-title", "home-room.png", 140);
+await shotAt(desktop, "#room-title", "home-room.png", 700);
+await shotAt(desktop, "#visit-title", "home-hours.png", 160);
 
 await desktop.goto(`${base}/menu?free=milk`, { waitUntil: "networkidle" });
 await warmUp(desktop);

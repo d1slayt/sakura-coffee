@@ -61,7 +61,7 @@ function StaticMenuView({ items, categories, query }: Props & { query: MenuQuery
         <div className="border-t border-line py-16">
           <p className="font-display text-display-s">{t.emptyTitle}</p>
           <p className="mt-2 text-muted">{t.emptyBody}</p>
-          <Link href="/menu" className="meta mt-6 inline-flex min-h-11 items-center text-rose-ink hover:text-ink">
+          <Link href="/menu" className="meta mt-6 inline-flex min-h-11 items-center text-pine hover:text-ink">
             {t.clear}
           </Link>
         </div>

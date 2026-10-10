@@ -8,58 +8,62 @@
    ───────────────────────────────────────────────────────────────────────── */
 
 @theme {
-  /* Colour */
-  --color-ivory: #f7f4ed;
-  --color-paper: #efeae0;
-  --color-ink: #241c19;
-  --color-coffee: #49352d;
-  --color-muted: #6e5b52;
-  --color-sakura: #e8b8bd;
-  --color-rose: #c9858d;
-  --color-rose-ink: #8e4a55;
-  --color-sage: #5e6450;
-  --color-line: rgb(36 28 25 / 0.16);
-  --color-line-strong: rgb(36 28 25 / 0.32);
-  --color-line-inverse: rgb(247 244 237 / 0.2);
-  --color-ivory-dim: #c9bfb8; /* secondary text on ink, 9.6:1 */
+  /* Colour — "Modern Kissaten": a pine-green shopfront on warm grey-white paper.
+     Contrast ratios are measured against the surface they are used on. */
+  --color-paper: #e9e7df; /* main surface */
+  --color-paper-deep: #dddad0; /* secondary surface, skeletons */
+  --color-paper-light: #f4f3ee; /* form fields */
+  --color-ink: #222421; /* graphite text, 12.6:1 on paper */
+  --color-muted: #5c5e59; /* secondary text, 5.3:1 on paper */
+  --color-pine: #244c3b; /* brand green: planes, navigation, links, 7.8:1 on paper */
+  --color-pine-deep: #1b3a2d; /* hover on pine */
+  --color-pine-soft: #b8c4bb; /* secondary text on pine, 5.4:1 */
+  --color-pink: #d9a6a0; /* rare accent: marks and highlights, never body text on paper */
+  --color-steel: #a9aaa5; /* metal grey: rules, technical details */
+  --color-control: #7c7e78; /* form control borders, 3.3:1 on paper */
+  --color-alert: #8a3b32; /* errors, 6.2:1 on paper */
+  --color-line: rgb(34 36 33 / 0.16);
+  --color-line-strong: rgb(34 36 33 / 0.36);
+  --color-line-inverse: rgb(233 231 223 / 0.24);
 
   /* Type */
   --font-display: var(--font-literata), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
 
-  --text-meta: 0.75rem;
-  --text-meta--line-height: 1.4;
-  --text-meta--letter-spacing: 0.14em;
+  /* Small print: hours, prices notes, labels. Sentence case, not shouted. */
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.45;
 
-  --text-display-xl: clamp(2.6rem, 1.2rem + 5.2vw, 7rem);
-  --text-display-xl--line-height: 0.94;
-  --text-display-xl--letter-spacing: -0.025em;
-  --text-display-l: clamp(2.5rem, 1.6rem + 3.8vw, 5.25rem);
-  --text-display-l--line-height: 1;
+  /* The one big serif size — used on the first screen of a page only. */
+  --text-display-xl: clamp(2.5rem, 1.1rem + 5.6vw, 6.5rem);
+  --text-display-xl--line-height: 0.98;
+  --text-display-xl--letter-spacing: -0.03em;
+  --text-display-l: clamp(2.25rem, 1.5rem + 3.2vw, 4.25rem);
+  --text-display-l--line-height: 1.02;
   --text-display-l--letter-spacing: -0.02em;
-  --text-display-m: clamp(2rem, 1.5rem + 2.1vw, 3.5rem);
-  --text-display-m--line-height: 1.05;
-  --text-display-m--letter-spacing: -0.015em;
-  --text-display-s: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
-  --text-display-s--line-height: 1.15;
-  --text-lede: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  /* Section headings are set in the sans, tight, like a shop sign. */
+  --text-heading: clamp(1.625rem, 1.3rem + 1.3vw, 2.5rem);
+  --text-heading--line-height: 1.1;
+  --text-heading--letter-spacing: -0.025em;
+  --text-display-s: clamp(1.375rem, 1.25rem + 0.5vw, 1.75rem);
+  --text-display-s--line-height: 1.2;
+  --text-lede: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
   --text-lede--line-height: 1.55;
 
   /* Layout */
   --container-page: 90rem;
   --container-prose: 38rem;
   --spacing-gutter: clamp(1rem, 0.4rem + 2.6vw, 3rem);
-  --spacing-section: clamp(5rem, 3rem + 8vw, 11rem);
-  --spacing-header: 4.5rem;
+  --spacing-section: clamp(4rem, 2.5rem + 6vw, 8.5rem);
+  --spacing-header: 4.25rem;
 
   /* Shape: square by default; inputs get a hairline-soft corner. */
   --radius-input: 2px;
 
   /* Motion */
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
-  --duration-quick: 180ms;
-  --duration-base: 360ms;
-  --duration-slow: 700ms;
+  --duration-quick: 160ms;
+  --duration-base: 320ms;
 }
 
 /* ─── Base ──────────────────────────────────────────────────────────────── */
@@ -71,7 +75,7 @@
   }
 
   body {
-    background: var(--color-ivory);
+    background: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: 1rem;
@@ -83,14 +87,13 @@
   }
 
   ::selection {
-    background: var(--color-sakura);
+    background: var(--color-pink);
     color: var(--color-ink);
   }
 
   h1,
   h2,
   h3 {
-    font-family: var(--font-display);
     font-weight: 400;
     text-wrap: balance;
     font-optical-sizing: auto;
@@ -103,17 +106,13 @@
     text-wrap: pretty;
   }
 
-  em {
-    font-style: italic;
-  }
-
   :focus-visible {
-    outline: 2px solid var(--color-rose-ink);
+    outline: 2px solid var(--color-pine);
     outline-offset: 3px;
   }
 
   .surface-dark :focus-visible {
-    outline-color: var(--color-sakura);
+    outline-color: var(--color-pink);
   }
 
   input,
@@ -139,36 +138,24 @@
   padding-inline: var(--spacing-gutter);
 }
 
-/* Small uppercase metadata — the "chalkboard" voice. */
+/* Small print: labels, hours, notes. */
 @utility meta {
   font-family: var(--font-sans);
   font-size: var(--text-meta);
   line-height: var(--text-meta--line-height);
-  letter-spacing: var(--text-meta--letter-spacing);
-  text-transform: uppercase;
   font-weight: 600;
 }
 
-/* Vertical caption beside photographs; reads bottom-to-top. */
-@utility vertical-caption {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  white-space: nowrap;
-}
-
-/* Underline that draws in from the left on hover/focus. */
+/* Underline on hover/focus and on the current page; no animation. */
 @utility link-draw {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-size: 0% 1px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: background-size var(--duration-base) var(--ease-soft);
-  padding-bottom: 2px;
+  text-decoration-line: none;
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 1px;
 
   &:hover,
   &:focus-visible,
   &[aria-current="page"] {
-    background-size: 100% 1px;
+    text-decoration-line: underline;
   }
 }
 
@@ -185,8 +172,13 @@
   }
 }
 
-@utility hairline {
-  border-color: var(--color-line);
+/* Sans section heading. */
+@utility heading {
+  font-family: var(--font-sans);
+  font-size: var(--text-heading);
+  line-height: var(--text-heading--line-height);
+  letter-spacing: var(--text-heading--letter-spacing);
+  font-weight: 700;
 }
 
 /* Hide scrollbars on intentionally scrollable rows (filters) while keeping them usable. */

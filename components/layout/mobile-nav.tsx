@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Menu, X } from "lucide-react";
-import { navigation, siteConfig } from "@/lib/site";
-import { cn } from "@/lib/utils";
+import { navigation } from "@/lib/site";
 import { isActivePath } from "./nav-links-view";
 
 interface Labels {
@@ -14,9 +13,7 @@ interface Labels {
   close: string;
   nav: string;
   cta: string;
-  hours: string;
   items: Record<(typeof navigation)[number]["key"], string>;
-  hourLabels: Record<(typeof siteConfig.hours)[number]["id"], string>;
 }
 
 /**
@@ -93,26 +90,22 @@ export function MobileNav({ labels }: { labels: Labels }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-x-0 top-(--spacing-header) bottom-0 z-40 flex flex-col overflow-y-auto border-t border-line bg-ivory px-(--spacing-gutter) pb-8"
+            className="surface-dark fixed inset-x-0 top-(--spacing-header) bottom-0 z-40 flex flex-col overflow-y-auto bg-pine px-(--spacing-gutter) pb-8 text-paper"
           >
             <nav aria-label={labels.nav}>
               <ul>
                 {navigation.map((item, i) => {
                   const active = isActivePath(pathname, item.href);
                   return (
-                    <li key={item.href} className="border-b border-line">
+                    <li key={item.href} className="border-b border-line-inverse">
                       <Link
                         ref={i === 0 ? firstLinkRef : undefined}
                         href={item.href}
                         aria-current={active ? "page" : undefined}
-                        className="flex items-baseline gap-4 py-5"
+                        className="flex items-center justify-between gap-4 py-5"
                       >
-                        <span aria-hidden className={cn("meta text-muted", active && "text-rose-ink")}>
-                          {item.index}
-                        </span>
-                        <span className={cn("font-display text-[2.5rem] leading-none", active && "italic")}>
-                          {labels.items[item.key]}
-                        </span>
+                        <span className="font-display text-[2.5rem] leading-none">{labels.items[item.key]}</span>
+                        {active ? <span aria-hidden className="size-2 bg-pink" /> : null}
                       </Link>
                     </li>
                   );
@@ -120,20 +113,9 @@ export function MobileNav({ labels }: { labels: Labels }) {
               </ul>
             </nav>
             <div className="mt-auto pt-10">
-              <p className="meta text-muted">{labels.hours}</p>
-              <dl className="mt-3 space-y-1 text-[0.9375rem]">
-                {siteConfig.hours.map((h) => (
-                  <div key={h.id} className="flex justify-between gap-4">
-                    <dt>{labels.hourLabels[h.id]}</dt>
-                    <dd className="tabular text-muted">
-                      {h.opens}–{h.closes}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
               <Link
                 href="/visit#book"
-                className="mt-8 flex min-h-12 items-center justify-center bg-ink px-6 font-semibold text-ivory"
+                className="mt-8 flex min-h-12 items-center justify-center bg-paper px-6 font-semibold text-ink"
               >
                 {labels.cta}
               </Link>

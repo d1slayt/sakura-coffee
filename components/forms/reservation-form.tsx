@@ -241,7 +241,7 @@ function ReservationFields({
       </div>
 
       <fieldset aria-describedby={errors.time ? "res-time-error" : timeHint ? "res-time-hint" : undefined} aria-invalid={errors.time ? true : undefined}>
-        <legend className="meta mb-2 text-coffee">{labels.time}</legend>
+        <legend className="meta mb-2 text-ink">{labels.time}</legend>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {slots.map((slot) => {
             const disabled = slotsDisabled || (slotsKnown && (!slot.available || slot.seatsLeft < Number(partySize)));
@@ -249,8 +249,8 @@ function ReservationFields({
               <label
                 key={slot.time}
                 className={cn(
-                  "flex min-h-14 cursor-pointer flex-col justify-center border px-3 py-2 transition-colors duration-(--duration-quick) has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-rose-ink",
-                  time === slot.time ? "border-ink bg-ink text-ivory" : "border-line-strong hover:border-ink",
+                  "flex min-h-14 cursor-pointer flex-col justify-center border px-3 py-2 transition-colors duration-(--duration-quick) has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-alert",
+                  time === slot.time ? "border-ink bg-ink text-paper" : "border-line-strong hover:border-ink",
                   disabled && "cursor-not-allowed opacity-45 hover:border-line-strong",
                 )}
               >
@@ -264,7 +264,7 @@ function ReservationFields({
                   className="sr-only"
                 />
                 <span className="text-lg font-semibold tabular">{slot.time}</span>
-                <span className={cn("text-xs", time === slot.time ? "text-ivory-dim" : "text-muted")}>
+                <span className={cn("text-xs", time === slot.time ? "text-pine-soft" : "text-muted")}>
                   {slotsKnown ? seatsLabel(slot.seatsLeft) : labels.sessionLength.replace("{n}", String(brewBar.sessionMinutes))}
                 </span>
               </label>
@@ -272,7 +272,7 @@ function ReservationFields({
           })}
         </div>
         {errors.time ? (
-          <p id="res-time-error" className="mt-2 text-sm font-medium text-rose-ink">
+          <p id="res-time-error" className="mt-2 text-sm font-medium text-alert">
             {errors.time}
           </p>
         ) : timeHint ? (

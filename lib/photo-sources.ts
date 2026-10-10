@@ -5,12 +5,8 @@
  */
 export const photoSources = {
   "hero-pour": "photo-1582768772255-7fb8066357ce",
-  "story-pour-over": "photo-1522825397800-ddf6405fc258",
-  "story-blossom": "photo-1522383225653-ed111181a951",
   "philosophy-beans": "photo-1447933601403-0c6688de566e",
-  "philosophy-espresso": "photo-1609050471053-8636409f9f5b",
   "atmosphere-window": "photo-1534040385115-33dcb3acba5b",
-  "atmosphere-table": "photo-1445116572660-236099ec97a0",
   "atmosphere-bar": "photo-1453614512568-c4024d13c247",
   "about-kettle": "photo-1759259639356-7c6e74eed1ec",
   "visit-interior": "photo-1600093463592-8e36ae95ef56",

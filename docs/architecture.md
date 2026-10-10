@@ -9,7 +9,7 @@
 | Стили | Tailwind CSS 4 (`@theme`-токены в `app/globals.css`) | Все цвета, отступы, шрифты и кривые анимации — токены; компоненты не задают свои значения. |
 | БД | PostgreSQL + Prisma 7.10 (генератор `prisma-client`, драйвер-адаптер `@prisma/adapter-pg`) | Нормализованная схема, миграции, типобезопасные запросы. |
 | Валидация | Zod 4 | Одна схема — один источник правды для Server Actions и API. |
-| Анимации | Motion 14 | Только появление блоков, мобильное меню и смена превью. |
+| Анимации | Motion 14 | Только открытие мобильного меню. Остальной интерфейс не зависит от анимаций. |
 | Иконки | Lucide React | |
 | Тесты | Vitest 5 (юнит + интеграция с реальной БД), Playwright 1.64 (e2e, десктоп + мобильный) | |
 
@@ -32,7 +32,7 @@ components/
   sections/  секции главной
   menu/      строки меню, фильтры (client), избранное (client)
   forms/     формы брони и контакта (client), поля, honeypot
-  ui/        Action (кнопки/ссылки), Photo, Reveal, BlossomMark, Logo, DataBoundary
+  ui/        Action (кнопки/ссылки), Photo, BlossomMark (только в логотипе), Logo, DataBoundary
 lib/
   i18n/      словари ru (основной) и en, тип Dictionary
   validations/  Zod-схемы

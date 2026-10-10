@@ -10,7 +10,7 @@ export function isActivePath(pathname: string | null, href: string) {
 }
 
 /**
- * Desktop navigation markup: numbered, small, with the current page underlined.
+ * Desktop navigation markup: plain links, the current page underlined.
  * Pure (no hooks), so the server can render it as the static fallback while
  * the client version resolves the current path.
  */
@@ -33,14 +33,9 @@ export function NavLinksView({
               <Link
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className="group flex items-baseline gap-2 py-3 text-[0.9375rem] font-medium"
+                className={cn("link-draw block py-3 text-[0.9375rem] font-semibold", active && "text-pine")}
               >
-                <span className={cn("meta text-[0.6875rem] text-muted", active && "text-rose-ink")} aria-hidden>
-                  {item.index}
-                </span>
-                <span className="link-draw" aria-current={active ? "page" : undefined}>
-                  {itemLabels[item.key]}
-                </span>
+                {itemLabels[item.key]}
               </Link>
             </li>
           );

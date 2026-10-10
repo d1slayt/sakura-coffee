@@ -2,19 +2,11 @@
  * English copy for SakuraCoffee. Every user-facing string in components comes
  * from a dictionary with this shape; adding a language means adding a file
  * that satisfies `Dictionary` (see ../index.ts), not editing components.
- *
- * `Emphasis` marks the one italic phrase in a headline.
  */
-
-export interface Emphasis {
-  before: string;
-  em: string;
-  after: string;
-}
 
 const en = {
   meta: {
-    title: "SakuraCoffee — Espresso & pour-over bar",
+    title: "SakuraCoffee — coffee shop: espresso, filter, Japanese tea",
     description:
       "A small espresso and pour-over bar with a seasonal menu, Japanese teas and pastries baked each morning. A concept brand.",
   },
@@ -35,6 +27,10 @@ const en = {
     weekdays: "Monday – Friday",
     weekend: "Saturday & Sunday",
   },
+  hoursShort: {
+    weekdays: "Mon–Fri",
+    weekend: "Sat–Sun",
+  },
   status: {
     openNow: "Open now",
     closedNow: "Closed now",
@@ -43,112 +39,59 @@ const en = {
     today: "today",
     tomorrow: "tomorrow",
   },
-  staticDemo: {
+  staticDemo: {
+
+
+
     reservation:
       "This is the static demo on GitHub Pages: your details were validated but not sent. The full version stores the request in PostgreSQL and checks free seats.",
     contact:
       "This is the static demo on GitHub Pages: your message was validated but not sent. The full version stores it in the database.",
   },
   demo: {
-    badge: "Demo details",
     notice: "SakuraCoffee is a concept brand. This address and these hours are placeholders.",
   },
   home: {
     hero: {
-      eyebrow: "Espresso & pour-over bar",
-      issue: "No. 01 — Autumn",
-      title: [
-        { before: "Two cherries,", em: "", after: "" },
-        { before: "one ", em: "careful", after: "" },
-        { before: "cup.", em: "", after: "" },
-      ] satisfies Emphasis[],
+      kicker: "SakuraCoffee coffee shop",
+      title: "Espresso, filter coffee and Japanese tea",
       intro:
-        "A coffee bean is the seed of a cherry. Sakura is the blossom of another. We're a small bar that gives both the attention they deserve: a seasonal menu, coffee brewed by hand, and somewhere quiet to drink it.",
+        "A small coffee shop: an espresso bar, a brew bar where filter coffee is made in front of you, and pastries in the morning, until they run out.",
       primaryCta: "See the menu",
-      secondaryCta: "Book the brew bar",
-      verticalCaption: "Kalita Wave · 93°C · 3:00",
-      figure: "Fig. 01 — Filter of the week, poured to order.",
-      onBarTitle: "On the bar today",
-      onBar: [
-        { label: "Espresso", value: "House blend, medium roast" },
-        { label: "Filter", value: "A rotating single origin" },
-        { label: "Kitchen", value: "Baked each morning, served until 14:00" },
-      ],
     },
-    story: {
-      label: "02 — Story",
-      quote: { before: "The coffee bean is the seed of a ", em: "cherry", after: "." } satisfies Emphasis,
-      paragraphs: [
-        "We named the shop after two cherries. One grows on a coffee shrub and holds the seed we roast. The other blooms for about a week each spring, and then it's gone.",
-        "Both are at their best for a short moment. An espresso is best in its first minute, a croissant before eleven. Most of what we do is about catching that moment, and being honest when it has passed.",
-      ],
-      link: "Read our story",
-      figure: "Fig. 02 — The bloom: the first thirty seconds of a pour-over.",
-    },
-    featured: {
-      label: "03 — From the bar",
-      title: { before: "A short menu, made ", em: "carefully", after: "." } satisfies Emphasis,
-      intro: "A few things we'd order ourselves, and one that's waiting for spring.",
-      cta: "See the full menu",
-      seasonalLabel: "Out of season",
+    menu: {
+      title: "On the menu now",
+      note: "Oat drink costs nothing extra. Ingredients and allergens are on the full menu.",
+      cta: "Full menu",
       unavailable: "Unavailable",
       empty: "The menu is being rewritten. Check back shortly.",
     },
-    philosophy: {
-      label: "04 — Method",
-      title: { before: "Slow where it matters, ", em: "quick", after: " where it doesn't." } satisfies Emphasis,
-      steps: [
-        {
-          title: "Source",
-          meta: "Traceable lots · seasonal",
-          body: "We buy green coffee by the lot, so we can tell you where a cup came from and how it was processed. The lots described on this site are concept examples.",
-        },
-        {
-          title: "Roast",
-          meta: "Rested 7–21 days",
-          body: "Light to medium roasts, rested for one to three weeks before they reach the grinder. Mondays are for roasting, which is why the brew bar is closed.",
-        },
-        {
-          title: "Brew",
-          meta: "Weighed · timed · tasted",
-          body: "Every recipe is weighed, timed and written on the board. If a shot runs fast, we pour it away and pull another.",
-        },
-        {
-          title: "Serve",
-          meta: "Ceramic, not paper",
-          body: "Hot drinks go into warmed ceramic cups. Filter coffee comes with a small card that says what you're drinking.",
-        },
+    room: {
+      title: "The room and the bar",
+      body: "A long wooden counter, a bench under the window and a separate brew bar where filter coffee is made while you watch.",
+      name: "Why SakuraCoffee: a coffee bean is the seed of the coffee cherry, and sakura is the blossom of another cherry.",
+      facts: [
+        { term: "By the window", description: "10 seats, no booking" },
+        { term: "Brew bar", description: "6 seats, 45-minute bookings" },
+        { term: "Music", description: "None before 9 am" },
+        { term: "Cups", description: "Hot drinks in ceramic; takeaway on request" },
+        { term: "Mondays", description: "Roasting day, the brew bar is closed" },
       ],
-      figureBeans: "Fig. 03 — Rested beans, ready for the grinder.",
-      figureEspresso: "Fig. 04 — 18 g in, 36 g out, about 28 seconds.",
-    },
-    atmosphere: {
-      label: "05 — The room",
-      title: { before: "Ten seats by the window, ", em: "six", after: " at the bar." } satisfies Emphasis,
-      body: "Morning light, a long wooden counter, no music before nine. Stay for one cup or three.",
-      captions: {
-        window: "Window bench, early",
-        windowVertical: "Morning light · east window",
-        table: "The round table",
-        bar: "The bar before opening",
-      },
-      note: "Photographs are illustrative and come from Unsplash.",
+      link: "More about the shop",
+      photoNote: "Photographs are illustrative and come from Unsplash.",
     },
     visit: {
-      label: "06 — Visit",
-      title: { before: "Come by, ", em: "or", after: " book a seat." } satisfies Emphasis,
-      hours: "Hours",
+      title: "Opening hours",
       address: "Address",
-      contact: "Contact",
-      cta: "Plan your visit",
+      contact: "Email",
+      cta: "Getting here",
     },
   },
   menu: {
     metaTitle: "Menu",
     metaDescription:
       "The full SakuraCoffee menu: espresso, hand-brewed filter, Japanese teas, pastries and a short kitchen menu, with ingredients and allergens.",
-    eyebrow: "Menu",
-    title: { before: "Everything we ", em: "make", after: "." } satisfies Emphasis,
+    title: "Menu",
     intro: "Ingredients and allergens for every item. Oat drink costs nothing extra.",
     searchLabel: "Search the menu",
     searchPlaceholder: "Search drinks, food or ingredients",
@@ -166,7 +109,7 @@ const en = {
     clear: "Clear filters",
     results: (n: number) => `${n} item${n === 1 ? "" : "s"}`,
     emptyTitle: "Nothing matches that.",
-    emptyBody: "Not even in spring. Try fewer filters or a different word.",
+    emptyBody: "Try fewer filters or a different word.",
     ingredients: "Ingredients",
     allergens: "Allergens",
     noAllergens: "No listed allergens",
@@ -176,9 +119,6 @@ const en = {
     veganOption: "Vegan with oat drink",
     loading: "Fetching the menu…",
     backToMenu: "Back to the menu",
-    viewItem: "View details",
-    category: "Category",
-    sections: { DRINK: "Drinks", FOOD: "Food" },
     dietaryLabel: "Dietary",
   },
   allergens: {
@@ -200,8 +140,7 @@ const en = {
     metaTitle: "Our story",
     metaDescription:
       "Why a coffee bar is named after a cherry blossom, and what SakuraCoffee pays attention to: sourcing, roasting, water, ceramics and the seasons.",
-    eyebrow: "Story",
-    title: { before: "Named after ", em: "two", after: " cherries." } satisfies Emphasis,
+    title: "Named after two cherries.",
     lede: "The coffee bean is the seed of a fruit called the coffee cherry. Sakura is the cherry blossom. We liked the coincidence, and then we noticed what the two have in common.",
     sections: [
       {
@@ -239,10 +178,6 @@ const en = {
         "Photographs are from Unsplash, used under the Unsplash License. They are illustrative and don't show a real SakuraCoffee location.",
       ],
     },
-    figures: {
-      kettle: "Fig. 05 — A slow, even pour.",
-      blossom: "Fig. 06 — The other cherry.",
-    },
     licenseLink: "Unsplash License",
     cta: "See what's on the menu",
   },
@@ -250,8 +185,7 @@ const en = {
     metaTitle: "Visit & book the brew bar",
     metaDescription:
       "Opening hours, location and contact for SakuraCoffee, plus booking for the six-seat pour-over brew bar.",
-    eyebrow: "Visit",
-    title: { before: "Come for a ", em: "cup", after: ", stay for a second." } satisfies Emphasis,
+    title: "Getting here",
     hours: "Opening hours",
     today: "Today",
     address: "Address",
@@ -300,29 +234,22 @@ const en = {
     required: "required",
   },
   footer: {
-    tagline: "Two cherries, one careful cup.",
-    explore: "Explore",
-    visit: "Visit",
-    colophon: "Colophon",
-    colophonBody: "Set in Literata and Manrope. Photography from Unsplash.",
     rights: "A concept brand built as a portfolio project.",
     copyright: "© 2026 d1slayt. All rights reserved. Design and code may not be reused without permission.",
-    sakura: "sakura, the cherry blossom.",
-    home: "Home",
   },
   notFound: {
     metaTitle: "Page not found",
-    eyebrow: "404",
-    title: { before: "This page has gone the way of ", em: "last spring's", after: " blossoms." } satisfies Emphasis,
-    body: "It may have moved, or it never existed. Either way, the coffee is still on.",
+    eyebrow: "Error 404",
+    title: "There's no such page.",
+    body: "The link may be out of date. The menu and opening hours are where they always are.",
     home: "Back to the start",
     menu: "See the menu",
   },
   error: {
-    title: "Something spilled.",
-    body: "This part of the page didn't load. It's on us, not you.",
+    title: "The page didn't load.",
+    body: "Something went wrong on our side. Please try again.",
     retry: "Try again",
-    dataTitle: "The menu is resting.",
+    dataTitle: "The menu didn't load.",
     dataBody: "We couldn't reach the menu just now. Please try again in a moment.",
   },
   contactTopics: {

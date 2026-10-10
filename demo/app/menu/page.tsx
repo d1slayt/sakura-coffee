@@ -6,7 +6,6 @@ import { Suspense } from "react";
 import { getDictionary } from "@/lib/i18n";
 import { staticCategories, staticItems } from "@/lib/static-catalog";
 import { StaticMenuBrowser, StaticMenuFallback } from "@/components/menu/static-menu-browser";
-import { EmphasisText } from "@/components/ui/emphasis";
 
 const t = getDictionary();
 
@@ -20,14 +19,11 @@ export const metadata: Metadata = {
 export default function MenuPage() {
   return (
     <div className="container-page pt-12 pb-(--spacing-section) md:pt-20">
-      <header className="grid gap-y-6 pb-12 md:grid-cols-12 md:gap-x-6 md:pb-16">
-        <p className="meta text-muted md:col-span-12">{t.menu.eyebrow}</p>
-        <h1 className="font-display text-display-xl md:col-span-7">
-          <EmphasisText value={t.menu.title} />
-        </h1>
-        <div className="self-end md:col-span-4 md:col-start-9">
-          <p className="text-lede text-coffee">{t.menu.intro}</p>
-          <p className="mt-4 text-sm text-muted">{t.menu.allergenNote}</p>
+      <header className="grid gap-y-5 pb-10 md:grid-cols-12 md:gap-x-6 md:pb-14">
+        <h1 className="font-display text-display-xl md:col-span-6">{t.menu.title}</h1>
+        <div className="self-end md:col-span-5 md:col-start-8">
+          <p className="text-lede">{t.menu.intro}</p>
+          <p className="mt-3 text-sm text-muted">{t.menu.allergenNote}</p>
         </div>
       </header>
 

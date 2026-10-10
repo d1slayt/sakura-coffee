@@ -4,77 +4,61 @@ import { deferToRequest, getFeaturedMenuItems } from "@/server/menu";
 import { FeaturedList } from "@/components/menu/featured-list";
 import { ActionLink } from "@/components/ui/action";
 import { DataBoundary } from "@/components/ui/data-boundary";
-import { EmphasisText } from "@/components/ui/emphasis";
-import { SectionLabel } from "@/components/ui/section-label";
 
 async function FeaturedItems() {
   // Read at request time (cached for minutes by getFeaturedMenuItems), so the
   // static shell — and the production build — never depends on the database.
   await deferToRequest();
-  const t = getDictionary().home.featured;
+  const t = getDictionary().home.menu;
   const items = await getFeaturedMenuItems();
-  if (items.length === 0) return <p className="border-y border-line py-10 text-muted">{t.empty}</p>;
+  if (items.length === 0) return <p className="py-10 text-muted">{t.empty}</p>;
   return (
     <FeaturedList
-      items={items.map(({ slug, name, description, priceCents, isAvailable, availabilityNote, imageUrl, imageAlt, brewNote }) => ({
+      items={items.map(({ slug, name, description, priceCents, isAvailable, availabilityNote }) => ({
         slug,
         name,
         description,
         priceCents,
         isAvailable,
         availabilityNote,
-        imageUrl,
-        imageAlt,
-        brewNote,
       }))}
-      labels={{ seasonalLabel: t.seasonalLabel, unavailable: t.unavailable }}
+      unavailableLabel={t.unavailable}
     />
   );
 }
 
 function FeaturedSkeleton() {
   return (
-    <div aria-hidden className="grid gap-6 lg:grid-cols-8">
-      <div className="lg:col-span-5">
-        {[0, 1, 2, 3, 4].map((i) => (
-          <div key={i} className="border-t border-line py-6">
-            <div className="h-8 w-1/2 bg-paper" />
-            <div className="mt-3 h-4 w-4/5 bg-paper" />
-          </div>
-        ))}
-      </div>
-      <div className="hidden aspect-[3/4] bg-paper lg:col-span-3 lg:block" />
+    <div aria-hidden className="grid gap-x-16 md:grid-cols-2">
+      {[0, 1, 2, 3, 4, 5].map((i) => (
+        <div key={i} className="border-b border-line py-5">
+          <div className="h-7 w-2/3 bg-paper-deep" />
+          <div className="mt-2 h-4 w-4/5 bg-paper-deep" />
+        </div>
+      ))}
     </div>
   );
 }
 
 export function FeaturedMenu() {
   const dict = getDictionary();
-  const t = dict.home.featured;
+  const t = dict.home.menu;
   return (
     <section aria-labelledby="featured-title" className="container-page py-(--spacing-section)">
-      {/* Two columns only from 1024px: on tablets the heading column was too narrow for the display type. */}
-      <div className="grid grid-cols-1 gap-y-12 lg:grid-cols-12 lg:gap-x-6">
-        <div className="lg:col-span-4">
-          <div className="lg:sticky lg:top-[calc(var(--spacing-header)+2rem)]">
-            <SectionLabel>{t.label}</SectionLabel>
-            <h2 id="featured-title" className="mt-6 font-display text-display-m">
-              <EmphasisText value={t.title} />
-            </h2>
-            <p className="mt-5 max-w-[34ch] text-muted">{t.intro}</p>
-            <ActionLink href="/menu" variant="text" className="mt-6">
-              {t.cta}
-            </ActionLink>
-          </div>
-        </div>
-        <div className="lg:col-span-8">
-          <DataBoundary title={dict.error.dataTitle} body={dict.error.dataBody} retryLabel={dict.error.retry}>
-            <Suspense fallback={<FeaturedSkeleton />}>
-              <FeaturedItems />
-            </Suspense>
-          </DataBoundary>
-        </div>
+      <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b-2 border-ink pb-3">
+        <h2 id="featured-title" className="heading">
+          {t.title}
+        </h2>
+        <ActionLink href="/menu" variant="text">
+          {t.cta}
+        </ActionLink>
       </div>
+      <DataBoundary title={dict.error.dataTitle} body={dict.error.dataBody} retryLabel={dict.error.retry}>
+        <Suspense fallback={<FeaturedSkeleton />}>
+          <FeaturedItems />
+        </Suspense>
+      </DataBoundary>
+      <p className="meta mt-5 font-medium text-muted">{t.note}</p>
     </section>
   );
 }

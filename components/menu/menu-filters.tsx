@@ -76,7 +76,7 @@ export function MenuFilters({ query, categories, labels }: Props) {
         window.clearTimeout(debounce.current);
         navigate({ q: text.trim() || undefined });
       }}
-      className="border-y border-line-strong bg-ivory"
+      className="border-y border-line-strong bg-paper"
     >
       {query.category ? <input type="hidden" name="category" value={query.category} /> : null}
 
@@ -158,7 +158,7 @@ export function MenuFilters({ query, categories, labels }: Props) {
           {labels.filters.available}
         </FilterToggle>
         {hasFilters ? (
-          <Link href="/menu" scroll={false} className="meta ml-auto inline-flex min-h-11 items-center px-2 text-rose-ink hover:text-ink">
+          <Link href="/menu" scroll={false} className="meta ml-auto inline-flex min-h-11 items-center px-2 text-pine hover:text-ink">
             {labels.clear}
           </Link>
         ) : null}
@@ -175,7 +175,7 @@ function CategoryLink({ href, active, children }: { href: string; active: boolea
       aria-current={active ? "page" : undefined}
       className={cn(
         "inline-flex min-h-11 items-center px-3 text-[0.9375rem] font-medium transition-colors duration-(--duration-quick)",
-        active ? "bg-ink text-ivory" : "text-coffee hover:bg-paper",
+        active ? "bg-pine text-paper" : "text-ink hover:bg-paper-deep",
       )}
     >
       {children}
@@ -199,7 +199,7 @@ function FilterToggle({
   return (
     <label
       className={cn(
-        "relative inline-flex min-h-11 cursor-pointer items-center gap-2 px-3 text-sm font-medium transition-colors duration-(--duration-quick) has-focus-visible:outline-2 has-focus-visible:outline-rose-ink",
+        "relative inline-flex min-h-11 cursor-pointer items-center gap-2 px-3 text-sm font-medium transition-colors duration-(--duration-quick) has-focus-visible:outline-2 has-focus-visible:outline-pine",
         checked ? "text-ink" : "text-muted hover:text-ink",
       )}
     >
@@ -208,7 +208,7 @@ function FilterToggle({
         aria-hidden
         className={cn(
           "inline-block size-3 border transition-colors",
-          checked ? "border-rose-ink bg-rose-ink" : "border-line-strong",
+          checked ? "border-pine bg-pine" : "border-line-strong",
         )}
       />
       {children}
