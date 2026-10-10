@@ -5,7 +5,7 @@ import { siteConfig } from "@/lib/site";
 export const hasDatabase = Boolean(process.env.DATABASE_URL);
 
 /** Email domain used by test data, so cleanup never touches real rows. */
-export const TEST_DOMAIN = "integration.sakura.test";
+export const TEST_DOMAIN = "integration.example.com";
 
 /** A bookable date `offset` days ahead that isn't a closed weekday. */
 export function bookableDate(offset: number): string {

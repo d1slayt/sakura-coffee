@@ -45,7 +45,7 @@ describe("when PostgreSQL is unreachable", () => {
       website: "",
       startedAt: String(Date.now() - 10_000),
       name: "Иван",
-      email: "ivan@integration.sakura.test",
+      email: "ivan@integration.example.com",
       topic: "GENERAL",
       message: "Сообщение при недоступной базе.",
     }))

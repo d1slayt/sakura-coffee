@@ -62,7 +62,7 @@ function ContactFormInner({ labels, onReset }: { labels: ContactLabels; onReset:
             type="text"
             required
             autoComplete="name"
-            maxLength={80}
+            maxLength={60}
             defaultValue={values.name}
             aria-invalid={errors.name ? true : undefined}
             aria-describedby={describedBy("contact-name", errors.name)}

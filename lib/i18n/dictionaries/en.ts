@@ -261,9 +261,16 @@ const en = {
   /** Server-side validation messages (Zod). */
   validation: {
     name: "Please tell us your name.",
-    nameTooLong: "Please keep your name under 80 characters.",
+    nameTooLong: "Please keep your name under 60 characters.",
+    nameChars: "Names can contain letters, spaces, hyphens and apostrophes — no digits or links.",
     email: "Enter a valid email address.",
-    phone: "Enter a valid phone number.",
+    emailReserved: "Mail to this address can't be delivered. Please use a real one.",
+    emailDisposable: "Disposable addresses aren't accepted — please use your usual email.",
+    emailTypo: (suggestion: string) => `This looks like a typo. Did you mean ${suggestion}?`,
+    phone: "Enter a phone number like +7 900 123-45-67.",
+    noLinks: "No links, please — describe it in words.",
+    noMarkup: "No HTML needed — plain text, please.",
+    gibberish: "This looks like random characters. Please write in plain words.",
     date: "Choose a valid date.",
     time: "Choose one of the listed session times.",
     partySize: "Choose how many seats you need.",

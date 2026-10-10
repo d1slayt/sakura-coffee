@@ -1,14 +1,14 @@
 import { z } from "zod";
-import { emailSchema, messages } from "./common";
+import { emailSchema, freeTextSchema, messages, nameSchema } from "./common";
 
 export const contactTopics = ["GENERAL", "EVENTS", "WHOLESALE", "PRESS"] as const;
 export type ContactTopic = (typeof contactTopics)[number];
 
 export const contactInputSchema = z.object({
-  name: z.string().trim().min(2, messages.name).max(80, messages.nameTooLong),
+  name: nameSchema,
   email: emailSchema,
   topic: z.enum(contactTopics, { error: messages.topic }).default("GENERAL"),
-  message: z.string().trim().min(10, messages.messageShort).max(2000, messages.messageLong),
+  message: freeTextSchema({ min: 10, max: 2000, tooShort: messages.messageShort, tooLong: messages.messageLong }),
 });
 
 export type ContactInput = z.infer<typeof contactInputSchema>;

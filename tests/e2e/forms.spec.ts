@@ -30,8 +30,8 @@ test.describe("brew bar booking", () => {
     await expect(slot).toBeChecked();
 
     await form.getByLabel("Гостей").selectOption("2");
-    await form.getByLabel("Имя").fill("Тест E2E");
-    await form.getByLabel("Эл. почта").fill(`e2e-${testInfo.project.name}-${Date.now()}@e2e.sakura.test`);
+    await form.getByLabel("Имя").fill("Тест Тестов");
+    await form.getByLabel("Эл. почта").fill(`e2e-${testInfo.project.name}-${Date.now()}@e2e.example.com`);
     await form.getByRole("button", { name: "Отправить заявку" }).click();
 
     const success = page.locator("#book").getByRole("status");
@@ -54,7 +54,11 @@ test.describe("contact form", () => {
     // Values survive a failed submission.
     await expect(form.getByLabel("Имя")).toHaveValue("Мария");
 
-    await form.getByLabel("Эл. почта").fill("maria@e2e.sakura.test");
+    await form.getByLabel("Эл. почта").fill("maria@e2e.example.com");
+    await form.getByLabel("Сообщение").fill("Продвижение сайтов недорого: best-seo.ru");
+    await form.getByRole("button", { name: "Отправить" }).click();
+    await expect(form.getByText("Без ссылок, пожалуйста: опишите словами.")).toBeVisible();
+
     await form.getByLabel("Тема").selectOption("EVENTS");
     await form.getByLabel("Сообщение").fill("Хотим провести небольшую дегустацию для команды.");
     await form.getByRole("button", { name: "Отправить" }).click();

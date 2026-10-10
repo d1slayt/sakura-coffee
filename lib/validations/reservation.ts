@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { brewBar, isSessionTime, type SessionTime } from "@/lib/booking";
-import { emailSchema, isoDateSchema, messages } from "./common";
+import { emailSchema, freeTextSchema, isoDateSchema, messages, nameSchema, optionalPhoneSchema } from "./common";
 
 /**
  * Shape validation for a reservation request. Calendar rules that depend on
@@ -10,15 +10,9 @@ import { emailSchema, isoDateSchema, messages } from "./common";
  * There is deliberately no `status` field: every request is stored as PENDING.
  */
 export const reservationInputSchema = z.object({
-  name: z.string().trim().min(2, messages.name).max(80, messages.nameTooLong),
+  name: nameSchema,
   email: emailSchema,
-  phone: z
-    .string()
-    .trim()
-    .max(32, messages.phone)
-    .refine((v) => v === "" || /^\+?[0-9 ()-]{6,}$/.test(v), messages.phone)
-    .transform((v) => (v === "" ? undefined : v))
-    .optional(),
+  phone: optionalPhoneSchema,
   date: isoDateSchema,
   time: z
     .string()
@@ -30,10 +24,7 @@ export const reservationInputSchema = z.object({
     .int(messages.partySize)
     .min(brewBar.minPartySize, messages.partyMin)
     .max(brewBar.maxPartySize, messages.partyMax),
-  note: z
-    .string()
-    .trim()
-    .max(500, messages.noteTooLong)
+  note: freeTextSchema({ min: 0, max: 500, tooLong: messages.noteTooLong })
     .transform((v) => (v === "" ? undefined : v))
     .optional(),
 });

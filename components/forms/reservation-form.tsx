@@ -290,7 +290,7 @@ function ReservationFields({
             type="text"
             required
             autoComplete="name"
-            maxLength={80}
+            maxLength={60}
             defaultValue={values.name}
             aria-invalid={errors.name ? true : undefined}
             aria-describedby={describedBy("res-name", errors.name)}
@@ -317,6 +317,8 @@ function ReservationFields({
             name="phone"
             type="tel"
             autoComplete="tel"
+            inputMode="tel"
+            placeholder="+7 900 123-45-67"
             maxLength={32}
             defaultValue={values.phone}
             aria-invalid={errors.phone ? true : undefined}
