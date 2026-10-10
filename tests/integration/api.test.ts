@@ -66,6 +66,6 @@ describe.skipIf(!hasDatabase)("REST API (PostgreSQL)", () => {
     const body = (await res.json()) as { data: { bookable: boolean; slots: { time: string; seatsLeft: number }[] } };
     expect(res.status).toBe(200);
     expect(body.data.bookable).toBe(true);
-    expect(body.data.slots).toHaveLength(6);
+    expect(body.data.slots).toHaveLength(11);
   });
 });

@@ -33,7 +33,9 @@ describe("booking rules", () => {
 
   it("only accepts listed session times", () => {
     expect(isSessionTime("10:00")).toBe(true);
-    expect(isSessionTime("12:00")).toBe(false);
+    expect(isSessionTime("19:00")).toBe(true);
+    expect(isSessionTime("12:30")).toBe(false);
+    expect(isSessionTime("20:00")).toBe(false);
     expect(isSessionTime("10:00; DROP TABLE")).toBe(false);
   });
 

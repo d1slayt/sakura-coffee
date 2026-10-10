@@ -38,7 +38,7 @@ describe("reservationInputSchema", () => {
     ["partySize", "5"],
     ["partySize", "2.5"],
     ["partySize", "abc"],
-    ["time", "12:00"],
+    ["time", "12:30"],
     ["date", "2026-02-30"],
     ["email", "not-an-email"],
     ["name", "A"],

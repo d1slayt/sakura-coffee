@@ -72,7 +72,7 @@ const en = {
       name: "Why SakuraCoffee: a coffee bean is the seed of the coffee cherry, and sakura is the blossom of another cherry.",
       facts: [
         { term: "By the window", description: "10 seats, no booking" },
-        { term: "Brew bar", description: "6 seats, 45-minute bookings" },
+        { term: "Brew bar", description: "6 seats, bookable 9:00–19:45" },
         { term: "Music", description: "None before 9 am" },
         { term: "Cups", description: "Hot drinks in ceramic; takeaway on request" },
         { term: "Mondays", description: "Roasting day, the brew bar is closed" },
@@ -195,7 +195,7 @@ const en = {
     booking: {
       heading: "Book the brew bar",
       intro:
-        "Six seats at the pour-over counter. Sessions last 45 minutes, up to four guests per booking, Tuesday to Sunday. Walk-ins are always welcome at the main bar.",
+        "Six seats at the pour-over counter. Sessions start every hour from 9:00 to 19:00 and last 45 minutes, up to four guests per booking, Tuesday to Sunday. Walk-ins are always welcome at the main bar.",
       date: "Date",
       time: "Session",
       timeHint: "Choose a date to see free seats.",

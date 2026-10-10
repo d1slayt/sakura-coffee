@@ -16,8 +16,11 @@ export const brewBar = {
   minDaysAhead: 1,
   /** … up to this many days ahead. */
   maxDaysAhead: 30,
-  /** Session start times, shop-local. */
-  sessionTimes: ["09:00", "10:00", "11:00", "13:00", "14:00", "15:00"],
+  /**
+   * Session start times, shop-local: every hour from weekend opening (9:00)
+   * to 19:00, so the last session ends at 19:45, before closing at 20:00.
+   */
+  sessionTimes: ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"],
   /** Weekdays without sessions (0 = Sunday). Mondays are for roasting. */
   closedWeekdays: [1],
 } as const;

@@ -4,6 +4,7 @@ import { Menu } from "lucide-react";
 import { getDictionary } from "@/lib/i18n";
 import { actionClass } from "@/components/ui/action";
 import { Logo } from "@/components/ui/logo";
+import { HomeLink } from "./home-link";
 import { MobileNav } from "./mobile-nav";
 import { NavLinks } from "./nav-links";
 import { NavLinksView } from "./nav-links-view";
@@ -26,9 +27,18 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-line bg-paper">
       <div className="container-page flex h-(--spacing-header) items-center justify-between gap-3 sm:gap-6">
         <div className="flex min-w-0 items-center gap-10 lg:gap-14">
-          <Link href="/" aria-label={t.nav.home} className="shrink-0 py-2">
-            <Logo />
-          </Link>
+          {/* usePathname needs a Suspense boundary; the fallback is a plain link home. */}
+          <Suspense
+            fallback={
+              <Link href="/" aria-label={t.nav.home} className="shrink-0 py-2">
+                <Logo />
+              </Link>
+            }
+          >
+            <HomeLink label={t.nav.home} className="shrink-0 py-2">
+              <Logo />
+            </HomeLink>
+          </Suspense>
           <Suspense fallback={<NavLinksView label={t.a11y.mainNavigation} itemLabels={t.nav.items} pathname={null} />}>
             <NavLinks label={t.a11y.mainNavigation} itemLabels={t.nav.items} />
           </Suspense>

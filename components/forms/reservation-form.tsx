@@ -242,7 +242,7 @@ function ReservationFields({
 
       <fieldset aria-describedby={errors.time ? "res-time-error" : timeHint ? "res-time-hint" : undefined} aria-invalid={errors.time ? true : undefined}>
         <legend className="meta mb-2 text-ink">{labels.time}</legend>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
           {slots.map((slot) => {
             const disabled = slotsDisabled || (slotsKnown && (!slot.available || slot.seatsLeft < Number(partySize)));
             return (

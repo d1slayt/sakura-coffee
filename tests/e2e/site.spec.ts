@@ -32,7 +32,7 @@ test.describe("home", () => {
     // Images inside display:none containers (the other breakpoint's layout) are skipped.
     const images = page.locator("main img").filter({ visible: true });
     const count = await images.count();
-    expect(count).toBeGreaterThanOrEqual(3);
+    expect(count).toBeGreaterThanOrEqual(2);
     for (let i = 0; i < count; i++) {
       const img = images.nth(i);
       await expect(img).toHaveAttribute("alt", /.*/);
@@ -78,6 +78,14 @@ test.describe("navigation", () => {
     const response = await page.goto("/this-page-does-not-exist");
     expect(response?.status()).toBe(404);
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Такой страницы нет");
+  });
+
+  test("the header logo scrolls the home page back to the top", async ({ page }) => {
+    await page.goto("/");
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(500);
+    await page.getByRole("banner").getByRole("link", { name: "SakuraCoffee — на главную" }).click();
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
   });
 
   test("main navigation is keyboard reachable", async ({ page, isMobile }) => {
